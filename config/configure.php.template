@@ -1,0 +1,7 @@
+<?php
+
+define("DB", "mysql:host=<database_host>;dbname=<database_name>;charset=utf8");
+define("DB_USER", "<db_username>");
+define("DB_PASSWORD", "<db_password>");
+
+?>
