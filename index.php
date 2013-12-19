@@ -5,7 +5,9 @@
 -->
 <?php
 include('config/configure.php');
+
 include('dao/BookDao.php');
+require_once(SMARTY_DIR . 'Smarty.class.php');
 
 $bookDao = new BookDao();
 $books = $bookDao->getAll();
