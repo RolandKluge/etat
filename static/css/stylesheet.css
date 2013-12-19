@@ -1,0 +1,27 @@
+/*
+ * Author: Roland Kluge
+ */
+
+* {
+    font-family: sans-serif;
+}
+
+#booksList ul {
+    list-style: none;
+}
+
+#booksList li {
+    list-style: none;
+    border: lightgrey solid 1px;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+
+.bookId {
+    display: inline;
+}
+
+.bookName {
+    display: inline;
+}
