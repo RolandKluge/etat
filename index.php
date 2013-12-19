@@ -33,7 +33,7 @@ $books = $bookDao->getAll();
             }
             ?>
             <li>
-                <a href="./editbook.php?action=create">
+                <a href="./editbook.php?action=new">
                     <img src="static/images/book_new.png" width="48" height="48"/>
                     <div class="bookName">Neues Buch anlegen...</div>
                 </a>
