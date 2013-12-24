@@ -22,6 +22,15 @@ class Database {
         }
         return self::$db;
     }
+    
+    
+    public static function createStatement($sql) {
+        $statement = Database::getDatabase()->query($sql, PDO::FETCH_ASSOC);
+        if ($statement === false) {
+            Database::throwDbError($this->getDatabase()->errorInfo());
+        }
+        return $statement;
+    }
 
     public static function throwDbError(array $errorInfo) {
         throw new Exception('DB error [' . $errorInfo[0] . ', ' . $errorInfo[1] . ']: ' . $errorInfo[2]);

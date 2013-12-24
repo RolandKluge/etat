@@ -3,7 +3,7 @@
 /*
  * Author: Roland Kluge
  */
-include_once('view_utils/editbook_utils.php');
+include_once('view_utils/edituser_utils.php');
 
 if (has_get_param('action') && is_valid_action(get_param('action'))) {
     $action = get_param('action');
@@ -13,21 +13,21 @@ if (has_get_param('action') && is_valid_action(get_param('action'))) {
     $errorMessage = 'Unknown action or missing action: ' . get_param('action');
 }
 
-$bookDao = new BookDao();
+$userDao = new UserDao();
 
 switch ($action) {
     case NEW_ACTION:
-        $title = 'Buch anlegen';
+        $title = 'Benutzer anlegen';
 
         $smarty = new Smarty();
         $smarty->assign('title', $title);
         $smarty->assign('action', SAVE_ACTION);
-        $smarty->display('editbook.tpl');
+        $smarty->display('edituser.tpl');
 
         break;
     case EDIT_ACTION:
         $id = get_param('id');
-        $user = $bookDao->getBook($id);
+        $user = $userDao->get($id);
 
         $title = $user->getName() . ' bearbeiten';
 
@@ -35,28 +35,25 @@ switch ($action) {
         $smarty->assign('title', $title);
         $smarty->assign('action', SAVE_ACTION);
         $smarty->assign('name', $user->getName());
-        $smarty->assign('description', $user->getDescription());
         $smarty->assign('id', $id);
-        $smarty->display('editbook.tpl');
+        $smarty->display('edituser.tpl');
 
         break;
     case SAVE_ACTION:
         $id = get_param('id');
         $name = get_param('name');
-        $description = get_param('description');
 
-        $user = new Book();
+        $user = new User();
         $user->setId($id);
         $user->setName($name);
-        $user->setDescription($description);
 
-        $bookDao->save($user);
+        $userDao->save($user);
 
-        header('Location: viewbook.php?book=' . $user->getId(), true, 302);
+        header('Location: index.php', true, 302);
         break;
     case DROP_ACTION:
         $id = get_param('id');
-        $bookDao->dropBook($id);
+        $userDao->drop($id);
         header('Location: index.php', true, 302);
         break;
 }

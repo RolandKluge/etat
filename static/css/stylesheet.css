@@ -6,15 +6,18 @@
     font-family: sans-serif;
 }
 
+#usersList ul,
 #booksList ul {
     list-style: none;
 }
 
+#usersList li, 
 #booksList li {
     clear: both;
     list-style: none;
 }
 
+#usersList .user, 
 #booksList .book {
     border: lightgrey solid 1px;
     border-radius: 5px;
@@ -22,21 +25,25 @@
     width: 100%;
 }
 
+#usersList .drop,
+#usersList .edit,
 #booksList .drop,
 #booksList .edit {
     float: right;
     margin: 5px;
 }
 
+#usersList div,
 #booksList div {
     float: left;
 }
 
-
+.userId,
 .bookId {
     display: inline;
 }
 
+.userName,
 .bookName {
     display: inline;
 }
