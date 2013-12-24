@@ -12,7 +12,7 @@ class UserMapper {
         $user = new User();
         $user->setId($row['id']);
         $user->setName($row['name']);
-        $user->setIsReal($row['isReal']);
+        $user->setIsReal($row['is_real']);
         return $user;
     }
 

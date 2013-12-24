@@ -32,7 +32,7 @@ final class BookDao {
         }
     }
 
-    public function save($book) {
+    public function save(Book $book) {
         if ($book->getId()) {
             $this->update($book);
         } else {
@@ -88,16 +88,41 @@ final class BookDao {
 
         $this->addUserToBook($user, $book);
     }
-    
+
     private function dropDefaultUser(Book $book) {
-        $sql = "SELECT * FROM users_to_books JOIN users ON users_to_books.user_id = users.id WHERE book_id = :book_id AND NOT isReal";
+        $sql = "SELECT * FROM users_to_books JOIN users ON users_to_books.user_id = users.id WHERE book_id = :book_id AND NOT is_real";
         $statement = Database::getDatabase()->prepare($sql);
         $statement->bindParam(":book_id", $book->getId());
         $statement->execute();
         $row = $statement->fetch(PDO::FETCH_ASSOC);
-        
+
         $userDao = new UserDao();
         $userDao->drop($row['user_id']);
+    }
+
+    public function getUsers(Book $book) {
+        $sql = "SELECT * FROM users_to_books JOIN users ON users_to_books.user_id = users.id WHERE book_id = :book_id";
+        $stmt = Database::getDatabase()->prepare($sql);
+        $stmt->bindParam(":book_id", $book->getId());
+        $stmt->execute();
+
+        $users = array();
+        $userDao = new UserDao();
+        foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            $user = $userDao->get($row['user_id']);
+            if ($user->isReal()) {
+                $users[$user->getId()] = $user;
+            }
+        }
+        return $users;
+    }
+
+    public function getBookToUsersMapping(array $books) {
+        $result = array();
+        foreach ($books as $book) {
+            $result[$book->getId()] = $this->getUsers($book);
+        }
+        return $result;
     }
 
 }

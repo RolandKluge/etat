@@ -15,6 +15,17 @@
                 </a>
                 <br/>
                 <div class='bookDescription'>{$book->getDescription()}</div>
+                <br/>
+                <div class='bookUsers'>
+                    Benutzer:
+                    <span class='bookUserName'>
+                        {foreach $bookToUsers[$book->getId()] as $user}
+                            {$user->getName()}{if !$user@last},{/if}
+                        {foreachelse}
+                            Keine Benutzer.
+                        {/foreach}
+                    </span>
+                </div>
                 <div class='drop'>
                     <a href="./editbook.php?action=drop&id={$book->getId()}">Löschen</a>
                 </div>
