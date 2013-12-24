@@ -4,7 +4,7 @@ include_once('view_utils/viewbook_utils.php');
 $bookId = get_param("book");
 
 $bookDao = new BookDao();
-$user = $bookDao->getBook($bookId);
+$user = $bookDao->get($bookId);
 
 $smarty = new Smarty();
 $smarty->assign("homeLinkLabel", "Zurück zur Übersicht");

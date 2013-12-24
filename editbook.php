@@ -27,7 +27,7 @@ switch ($action) {
         break;
     case EDIT_ACTION:
         $id = get_param('id');
-        $user = $bookDao->getBook($id);
+        $user = $bookDao->get($id);
 
         $title = $user->getName() . ' bearbeiten';
 
@@ -56,7 +56,7 @@ switch ($action) {
         break;
     case DROP_ACTION:
         $id = get_param('id');
-        $bookDao->dropBook($id);
+        $bookDao->drop($id);
         header('Location: index.php', true, 302);
         break;
 }

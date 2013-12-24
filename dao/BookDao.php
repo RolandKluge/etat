@@ -13,16 +13,16 @@ final class BookDao {
     public function getAll() {
         $sql = "SELECT * FROM books";
         $books = array();
-        foreach ($this->createStatement($sql) as $row) {
+        foreach (Database::createStatement($sql) as $row) {
             $book = BookMapper::createBook($row);
             $books[$book->getId()] = $book;
         }
         return $books;
     }
 
-    public function getBook($id) {
+    public function get($id) {
         $sql = "SELECT * FROM books WHERE id=" . (int) $id;
-        $row = $this->createStatement($sql)->fetch();
+        $row = Database::createStatement($sql)->fetch();
         if (!$row) {
             return NULL;
         } else {
@@ -33,13 +33,13 @@ final class BookDao {
 
     public function save($book) {
         if ($book->getId()) {
-            $this->updateBook($book);
+            $this->update($book);
         } else {
-            $this->createBook($book);
+            $this->create($book);
         }
     }
 
-    private function createBook(Book $book) {
+    private function create(Book $book) {
         $sql = "INSERT INTO books (name, description) VALUES (:name, :description)";
         $statement = Database::getDatabase()->prepare($sql);
         $statement->bindParam(":name", $book->getName());
@@ -48,7 +48,7 @@ final class BookDao {
         $book->setId(Database::getDatabase()->lastInsertId());
     }
 
-    private function updateBook(Book $book) {
+    private function update(Book $book) {
         $sql = "UPDATE books SET name = :name, description = :description WHERE id = :id";
         $statement = Database::getDatabase()->prepare($sql);
         $statement->bindParam(":id", $book->getId());
@@ -57,18 +57,10 @@ final class BookDao {
         $statement->execute();
     }
 
-    public function dropBook($id) {
+    public function drop($id) {
         $sql = "DELETE FROM books WHERE id = :id";
         $statement = Database::getDatabase()->prepare($sql);
         $statement->execute(array(":id" => $id));
-    }
-
-    private function createStatement($sql) {
-        $statement = Database::getDatabase()->query($sql, PDO::FETCH_ASSOC);
-        if ($statement === false) {
-            Database::throwDbError($this->getDatabase()->errorInfo());
-        }
-        return $statement;
     }
 
 }
