@@ -9,6 +9,7 @@ final class User {
 
     private $id;
     private $name;
+    private $isReal;
 
     public function getId() {
         return $this->id;
@@ -24,6 +25,15 @@ final class User {
     
     public function setName($name) {
         $this->name = $name;
+    }
+    
+    
+    public function getIsReal() {
+        return $this->isReal;
+    }
+    
+    public function setIsReal($isReal) {
+        $this->isReal = $isReal;
     }
     
 }

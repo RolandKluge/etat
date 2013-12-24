@@ -40,9 +40,10 @@ final class UserDao {
     }
 
     private function create(User $user) {
-        $sql = "INSERT INTO users (name) VALUES (:name)";
+        $sql = "INSERT INTO users (name, isReal) VALUES (:name, :isReal)";
         $statement = Database::getDatabase()->prepare($sql);
         $statement->bindParam(":name", $user->getName());
+        $statement->bindParam(":isReal", $user->getIsReal());
         $statement->execute();
         $user->setId(Database::getDatabase()->lastInsertId());
     }

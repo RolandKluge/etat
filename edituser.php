@@ -22,6 +22,8 @@ switch ($action) {
         $smarty = new Smarty();
         $smarty->assign('title', $title);
         $smarty->assign('action', SAVE_ACTION);
+        $smarty->assign('name', '');
+        $smarty->assign('id', '');
         $smarty->display('edituser.tpl');
 
         break;
@@ -46,6 +48,7 @@ switch ($action) {
         $user = new User();
         $user->setId($id);
         $user->setName($name);
+        $user->setIsReal(true);
 
         $userDao->save($user);
 
