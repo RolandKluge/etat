@@ -20,23 +20,30 @@ switch ($action) {
         $title = 'Buch anlegen';
 
         $smarty = new Smarty();
+        
         $smarty->assign('title', $title);
         $smarty->assign('action', SAVE_ACTION);
+        $smarty->assign('name', '');
+        $smarty->assign('description', '');
+        $smarty->assign('id', '');
+        
         $smarty->display('editbook.tpl');
 
         break;
     case EDIT_ACTION:
         $id = get_param('id');
-        $user = $bookDao->get($id);
+        $book = $bookDao->get($id);
 
-        $title = $user->getName() . ' bearbeiten';
+        $title = $book->getName() . ' bearbeiten';
 
         $smarty = new Smarty();
+        
         $smarty->assign('title', $title);
         $smarty->assign('action', SAVE_ACTION);
-        $smarty->assign('name', $user->getName());
-        $smarty->assign('description', $user->getDescription());
+        $smarty->assign('name', $book->getName());
+        $smarty->assign('description', $book->getDescription());
         $smarty->assign('id', $id);
+        
         $smarty->display('editbook.tpl');
 
         break;
@@ -45,14 +52,14 @@ switch ($action) {
         $name = get_param('name');
         $description = get_param('description');
 
-        $user = new Book();
-        $user->setId($id);
-        $user->setName($name);
-        $user->setDescription($description);
+        $book = new Book();
+        $book->setId($id);
+        $book->setName($name);
+        $book->setDescription($description);
 
-        $bookDao->save($user);
+        $bookDao->save($book);
 
-        header('Location: viewbook.php?book=' . $user->getId(), true, 302);
+        header('Location: viewbook.php?book=' . $book->getId(), true, 302);
         break;
     case DROP_ACTION:
         $id = get_param('id');

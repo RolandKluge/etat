@@ -28,7 +28,7 @@ final class User {
     }
     
     
-    public function getIsReal() {
+    public function isReal() {
         return $this->isReal;
     }
     

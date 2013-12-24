@@ -43,7 +43,7 @@ final class UserDao {
         $sql = "INSERT INTO users (name, isReal) VALUES (:name, :isReal)";
         $statement = Database::getDatabase()->prepare($sql);
         $statement->bindParam(":name", $user->getName());
-        $statement->bindParam(":isReal", $user->getIsReal());
+        $statement->bindParam(":isReal", $user->isReal());
         $statement->execute();
         $user->setId(Database::getDatabase()->lastInsertId());
     }

@@ -39,23 +39,25 @@
 <h2>Benutzer</h2>
 <ul id='usersList'>
     {foreach $users as $user}
-        <li>
-            <div class="user">
-                <div>
-                    <img src="static/images/user.png" width="48" height="48"/>
+        {if $user->isReal()}
+            <li>
+                <div class="user">
+                    <div>
+                        <img src="static/images/user.png" width="48" height="48"/>
+                    </div>
+                    <div>
+                        <div class="userName">{$user->getName()}</div>
+                    </div>
+                    <br/>
+                    <div class='drop'>
+                        <a href="./edituser.php?action=drop&id={$user->getId()}">Löschen</a>
+                    </div>
+                    <div class='edit'>
+                        <a href="./edituser.php?action=edit&id={$user->getId()}">Bearbeiten</a>
+                    </div>
                 </div>
-                <div>
-                    <div class="userName">{$user->getName()}</div>
-                </div>
-                <br/>
-                <div class='drop'>
-                    <a href="./edituser.php?action=drop&id={$user->getId()}">Löschen</a>
-                </div>
-                <div class='edit'>
-                    <a href="./edituser.php?action=edit&id={$user->getId()}">Bearbeiten</a>
-                </div>
-            </div>
-        </li>   
+            </li>   
+        {/if}
     {/foreach}
     <li>
         <div class="user">
