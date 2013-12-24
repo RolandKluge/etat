@@ -4,8 +4,8 @@
  */
 include('config/configure.php');
 
-include('dao/BookDao.php');
 require_once(SMARTY_DIR . 'Smarty.class.php');
+include('dao/BookDao.php');
 
 $smarty = new Smarty();
 

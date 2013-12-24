@@ -16,8 +16,6 @@ include('dao/Database.php');
 
 final class BookDao {
 
-    private $db = null;
-
     public function getAll() {
         $sql = "SELECT * FROM books";
         $books = array();
@@ -26,6 +24,17 @@ final class BookDao {
             $books[$book->getId()] = $book;
         }
         return $books;
+    }
+
+    public function getBook($id) {
+        $sql = "SELECT * FROM books WHERE id=" . (int) $id;
+        $row = $this->createStatement($sql)->fetch();
+        if (!$row) {
+            return NULL;
+        } else {
+            $book = BookMapper::createBook($row);
+            return $book;
+        }
     }
 
     private function createStatement($sql) {

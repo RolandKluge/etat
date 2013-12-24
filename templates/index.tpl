@@ -9,7 +9,7 @@
         <ul id="booksList">
             {foreach $books as $book}
                 <li>
-                    <a href="./viewbook.php?book=<?php echo $name ?>">
+                    <a href="./viewbook.php?book={$book->getId()}">
                         <img src="static/images/book.png" width="48" height="48"/>
                         <div class="bookId">{$book->getId()}</div>:<div class="bookName">{$book->getName()}</div>
                     </a>

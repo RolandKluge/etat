@@ -1,20 +1,17 @@
-<!DOCTYPE html>
-<!--
- - 
- -  Author: Roland Kluge
--->
 <?php
 include('config/configure.php');
 
-$bookName = $_GET["book"];
-?>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Entries in <?php echo $bookName?></title>
-    </head>
-    <body>
-        <a href="./index.php">Back to Overview</a>
-        <h2>Entries in <?php echo $bookName?></h2>
-    </body>
-</html>
+require_once(SMARTY_DIR . 'Smarty.class.php');
+include('view_utils/common.php');
+
+include('dao/BookDao.php');
+
+$bookId = get_param("book");
+
+$bookDao = new BookDao();
+$book = $bookDao->getBook($bookId);
+
+$smarty = new Smarty();
+
+$smarty->assign("title", "Einträge in " . $book->getName());
+$smarty->display("viewbook.tpl");
