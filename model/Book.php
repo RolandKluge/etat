@@ -9,6 +9,7 @@ final class Book {
 
     private $id;
     private $name;
+    private $description;
 
     public function getId() {
         return $this->id;
@@ -24,6 +25,14 @@ final class Book {
     
     public function setName($name) {
         $this->name = $name;
+    }
+    
+    public function setDescription($description) {
+        $this->description = $description;
+    }
+    
+    public function getDescription() {
+        return $this->description;
     }
 
 }

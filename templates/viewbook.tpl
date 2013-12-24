@@ -1,11 +1,4 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{$title}</title>
-    </head>
-    <body>
-        <a href="./index.php">Back to Overview</a>
+{include file='header.tpl'}
+        <a href="./index.php">{$homeLinkLabel}</a>
         <h1>{$title}</h1>
-    </body>
-</html>
+{include file='footer.tpl'}

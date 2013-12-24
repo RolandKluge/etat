@@ -11,10 +11,25 @@
 }
 
 #booksList li {
+    clear: both;
     list-style: none;
+}
+
+#booksList .book {
     border: lightgrey solid 1px;
     border-radius: 5px;
     margin-top: 5px;
+    width: 100%;
+}
+
+#booksList .drop,
+#booksList .edit {
+    float: right;
+    margin: 5px;
+}
+
+#booksList div {
+    float: left;
 }
 
 
@@ -24,4 +39,8 @@
 
 .bookName {
     display: inline;
+}
+
+.bookDescription {
+    color: #AAAAAA;
 }

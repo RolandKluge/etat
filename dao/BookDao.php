@@ -37,6 +37,38 @@ final class BookDao {
         }
     }
 
+    public function save($book) {
+        if ($book->getId()) {
+            $this->updateBook($book);
+        } else {
+            $this->createBook($book);
+        }
+    }
+
+    private function createBook(Book $book) {
+        $sql = "INSERT INTO books (name, description) VALUES (:name, :description)";
+        $statement = Database::getDatabase()->prepare($sql);
+        $statement->bindParam(":name", $book->getName());
+        $statement->bindParam(":description", $book->getDescription());
+        $statement->execute();
+        $book->setId(Database::getDatabase()->lastInsertId());
+    }
+
+    private function updateBook(Book $book) {
+        $sql = "UPDATE books SET name = :name, description = :description WHERE id = :id";
+        $statement = Database::getDatabase()->prepare($sql);
+        $statement->bindParam(":id", $book->getId());
+        $statement->bindParam(":name", $book->getName());
+        $statement->bindParam(":description", $book->getDescription());
+        $statement->execute();
+    }
+
+    public function dropBook($id) {
+        $sql = "DELETE FROM books WHERE id = :id";
+        $statement = Database::getDatabase()->prepare($sql);
+        $statement->execute(array(":id" => $id));
+    }
+
     private function createStatement($sql) {
         $statement = Database::getDatabase()->query($sql, PDO::FETCH_ASSOC);
         if ($statement === false) {

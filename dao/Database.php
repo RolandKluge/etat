@@ -8,6 +8,10 @@ class Database {
 
     private static $db = null;
 
+    /**
+     * @return PDO the database
+     * @throws Exception
+     */
     public static function getDatabase() {
         if (self::$db == null) {
             try {
