@@ -17,6 +17,25 @@ function get_param($key) {
     return filter_input(INPUT_GET, $key, FILTER_SANITIZE_STRING);
 }
 
+function multi_get_param($key) {
+    $result = array();
+    
+    $query = get_query_string();
+    foreach (explode('&', $query) as $pair) {
+        $keyValue = explode('=', $pair);
+        if ($keyValue[0] === $key)
+        {
+            array_push($result, $keyValue[1]);
+        }
+    }
+    
+    return $result;
+}
+
+function get_query_string() {
+    return filter_input(INPUT_SERVER, 'QUERY_STRING');
+}
+
 function has_get_param($key) {
     return get_param($key) != NULL;
 }

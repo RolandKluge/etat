@@ -59,7 +59,7 @@ final class BookDao {
         $statement->execute();
     }
 
-    public function addUserToBook(User $user, Book $book) {
+    public function addUser(Book $book, User $user) {
         $sql = "INSERT INTO users_to_books (user_id, book_id) VALUES (:user_id, :book_id)";
         $statement = Database::getDatabase()->prepare($sql);
         $statement->bindParam(":user_id", $user->getId());
@@ -86,7 +86,7 @@ final class BookDao {
         $userDao = new UserDao();
         $userDao->save($user);
 
-        $this->addUserToBook($user, $book);
+        $this->addUser($book, $user);
     }
 
     private function dropDefaultUser(Book $book) {
@@ -123,6 +123,30 @@ final class BookDao {
             $result[$book->getId()] = $this->getUsers($book);
         }
         return $result;
+    }
+
+    public function setUsers(Book $book, array $users) {
+        $this->removeRealUsers($book);
+        foreach ($users as $user) {
+            $this->addUser($book, $user);
+        }
+    }
+
+    public function removeRealUsers(Book $book) {
+        foreach ($this->getUsers($book) as $user) {
+            if ($user->isReal())
+            {
+                $this->removeUser($book, $user);
+            }
+        }
+    }
+    
+    public function removeUser(Book $book, User $user) {
+        $sql = "DELETE FROM users_to_books WHERE book_id = :book_id AND user_id = :user_id";
+        $stmt = Database::getDatabase()->prepare($sql);
+        $stmt->bindParam(":book_id", $book->getId());
+        $stmt->bindParam(":user_id", $user->getId());
+        $stmt->execute();
     }
 
 }

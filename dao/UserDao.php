@@ -20,6 +20,18 @@ final class UserDao {
         return $users;
     }
 
+    public function getMultiple($userIds) {
+        $sql = "SELECT * FROM users";
+        $users = array();
+        foreach (Database::createStatement($sql) as $row) {
+            $user = UserMapper::map($row);
+            if (in_array($user->getId(), $userIds)) {
+                $users[$user->getId()] = $user;
+            }
+        }
+        return $users;
+    }
+
     public function get($id) {
         $sql = "SELECT * FROM users WHERE id=" . (int) $id;
         $row = Database::createStatement($sql)->fetch();
@@ -61,4 +73,5 @@ final class UserDao {
         $statement = Database::getDatabase()->prepare($sql);
         $statement->execute(array(":id" => $id));
     }
+
 }

@@ -14,6 +14,7 @@ if (has_get_param('action') && is_valid_action(get_param('action'))) {
 }
 
 $bookDao = new BookDao();
+$userDao = new UserDao();
 
 switch ($action) {
     case NEW_ACTION:
@@ -26,6 +27,8 @@ switch ($action) {
         $smarty->assign('name', '');
         $smarty->assign('description', '');
         $smarty->assign('id', '');
+        $smarty->assign('users', $userDao->getAll());
+        $smarty->assign('bookUsers', array());
         
         $smarty->display('editbook.tpl');
 
@@ -43,6 +46,8 @@ switch ($action) {
         $smarty->assign('name', $book->getName());
         $smarty->assign('description', $book->getDescription());
         $smarty->assign('id', $id);
+        $smarty->assign('users', $userDao->getAll());
+        $smarty->assign('bookUsers', $bookDao->getUsers($book));
         
         $smarty->display('editbook.tpl');
 
@@ -51,6 +56,7 @@ switch ($action) {
         $id = get_param('id');
         $name = get_param('name');
         $description = get_param('description');
+        $userIds = multi_get_param('users');
 
         $book = new Book();
         $book->setId($id);
@@ -58,8 +64,11 @@ switch ($action) {
         $book->setDescription($description);
 
         $bookDao->save($book);
+        
+        $users = $userDao->getMultiple($userIds);
+        $bookDao->setUsers($book, $users);
 
-        header('Location: viewbook.php?book=' . $book->getId(), true, 302);
+        header('Location: index.php', true, 302);
         break;
     case DROP_ACTION:
         $id = get_param('id');
