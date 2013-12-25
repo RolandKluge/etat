@@ -1,16 +1,19 @@
 <?php
 include_once('view_utils/viewbook_utils.php');
 
-$bookId = get_param("book");
+$bookId = get_param("id");
 
 $bookDao = new BookDao();
-$user = $bookDao->get($bookId);
+$entryDao = new BookEntryDao();
+$book = $bookDao->get($bookId);
 
 $smarty = new Smarty();
 $smarty->assign("homeLinkLabel", "Zurück zur Übersicht");
-if($user)
+if($book)
 {
-    $smarty->assign("title", "Einträge in " . $user->getName());
+    $smarty->assign("title", "Einträge in " . $book->getName());
+    $smarty->assign("book", $book);
+    $smarty->assign("entries", $entryDao->getEntries($book));
 }
 else {
     $smarty->assign("title", "Unbekanntes Buch!");

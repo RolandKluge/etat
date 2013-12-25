@@ -5,7 +5,7 @@
     {foreach $books as $book}
         <li>
             <div class="book">
-                <a href="./viewbook.php?book={$book->getId()}">
+                <a href="./viewbook.php?id={$book->getId()}">
                     <div>
                         <img src="static/images/book.png" width="48" height="48"/>
                     </div>

@@ -78,6 +78,10 @@ final class BookDao {
         }
     }
 
+    /*
+     * Section on 'users and books'
+     */
+
     private function createDefaultUser(Book $book) {
         $user = new User();
         $user->setName("Gemeinschaft");
@@ -134,18 +138,54 @@ final class BookDao {
 
     public function removeRealUsers(Book $book) {
         foreach ($this->getUsers($book) as $user) {
-            if ($user->isReal())
-            {
+            if ($user->isReal()) {
                 $this->removeUser($book, $user);
             }
         }
     }
-    
+
     public function removeUser(Book $book, User $user) {
         $sql = "DELETE FROM users_to_books WHERE book_id = :book_id AND user_id = :user_id";
         $stmt = Database::getDatabase()->prepare($sql);
         $stmt->bindParam(":book_id", $book->getId());
         $stmt->bindParam(":user_id", $user->getId());
+        $stmt->execute();
+    }
+
+    /*
+     * Section on 'book entries'
+     */
+
+    public function getEntries(Book $book) {
+        $bookEntryMapper = new BookEntryMapper();
+        $userDao = new UserDao();
+
+        $sql = "SELECT * FROM entries WHERE book_id = :book_id";
+        $stmt = Database::getDatabase()->prepare($sql);
+        $stmt->bindParam(":book_id", $book->getId());
+        $stmt->execute();
+
+        $result = array();
+        foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            $entry = $bookEntryMapper->map($row);
+
+            $entry->setBook($book);
+            $entry->setUser($userDao->get($row['user_id']));
+
+            array_push($result, $entry);
+        }
+        return $array;
+    }
+
+    public function addEntry(BookEntry $entry) {
+        $sql = 'INSERT INTO entries (amount, date_time, description, book_id, user_id)' .
+                ' VALUES (:amount, :date_time, :descriptin, :book_id, :user_id)';
+        $stmt = Database::getDatabase()->prepare($sql);
+        $stmt->bindParam(":amount", $entry->getAmount());
+        $stmt->bindParam(":date_time", $entry->getDateTime());
+        $stmt->bindParam(":description", $entry->getDescription());
+        $stmt->bindParam(":book_id", $entry->getBook()->getId());
+        $stmt->bindParam(":user_id", $entry->getUser()->getId());
         $stmt->execute();
     }
 

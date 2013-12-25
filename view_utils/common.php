@@ -5,6 +5,7 @@
 include('config/configure.php');
 
 include_once('dao/BookDao.php');
+include_once('dao/BookEntryDao.php');
 include_once('dao/UserDao.php');
 require_once(SMARTY_DIR . 'Smarty.class.php');
 
