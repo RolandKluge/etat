@@ -13,7 +13,8 @@
     <span id="amountNote" class="errorMessage"></span>
     <br/>
     <label for="date">Datum:</label>
-    <input name="date" type="text" size="10" value='{$date}'/>
+    <input id="date" name="date" type="text" size="10" value='{$date}'/>
+    <span id="dateNote" class="errorMessage"></span>
     <br/>
     <label for="description">Beschreibung</label>
     <input name="description" type="text" size="50" value='{$description}'/>
