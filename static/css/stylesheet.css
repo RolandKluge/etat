@@ -2,9 +2,23 @@
  * Author: Roland Kluge
  */
 
+/* =============================================================================
+ * general
+ * =============================================================================
+ */
+
 * {
     font-family: sans-serif;
 }
+
+.homeLink {
+    font-size: 150%;
+}
+
+/* =============================================================================
+ * index
+ * =============================================================================
+ */
 
 #usersList ul,
 #booksList ul {
@@ -51,3 +65,41 @@
 .bookDescription {
     color: #AAAAAA;
 }
+
+/* =============================================================================
+ * viewbook
+ * =============================================================================
+ */
+
+#newEntry #icon {
+    vertical-align: middle;
+    display: inline-block;
+    float: left;
+}
+
+#newEntry #text {
+    vertical-align: middle;
+    text-decoration: none;
+    height: 48px;
+    line-height: 48px;
+    font-size: 150%;
+    float: left;
+}
+
+#entriesList {
+    font-size: 150%;
+    border-collapse: collapse;
+}
+
+#entriesList td {
+    border: #AAAAAA solid 1px;
+}
+
+#entriesList thead {
+    font-weight: bold;
+}
+
+#entriesList .entryDate {
+    width:  20%;
+}
+

@@ -1,4 +1,7 @@
 {include file='header.tpl'}
+<div class="homeLink">
+    <a href="./index.php">Home</a>
+</div>
 <h1>{$title}</h1>
 <form id="editEntryForm" method="get" action="editentry.php">
     <label for="amount">Betrag:</label>
