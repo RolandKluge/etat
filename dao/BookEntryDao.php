@@ -57,7 +57,7 @@ final class BookEntryDao {
                 ' VALUES (:amount, :date, :description, :book_id, :user_id)';
         $stmt = Database::getDatabase()->prepare($sql);
         $stmt->bindParam(":amount", $entry->getAmount());
-        $stmt->bindParam(":date", $entry->getDate());
+        $stmt->bindParam(":date", BookEntryDao::formatDateTime($entry->getDate()));
         $stmt->bindParam(":description", $entry->getDescription());
         $stmt->bindParam(":book_id", $entry->getBook()->getId());
         $stmt->bindParam(":user_id", $entry->getUser()->getId());
@@ -65,10 +65,13 @@ final class BookEntryDao {
     }
 
     private function update(BookEntry $entry) {
-        $sql = 'UPDATE entries SET amount = :amount, date = :date, description = :description, book_id = :book_id, user_id = :user_id';
+        $sql = 'UPDATE entries SET amount = :amount, date = :date, description = :description, '
+                . 'book_id = :book_id, user_id = :user_id '
+                . 'WHERE id = :id';
         $stmt = Database::getDatabase()->prepare($sql);
+        $stmt->bindParam(":id", $entry->getId());
         $stmt->bindParam(":amount", $entry->getAmount());
-        $stmt->bindParam(":date", $entry->getDate());
+        $stmt->bindParam(":date", BookEntryDao::formatDateTime($entry->getDate()));
         $stmt->bindParam(":description", $entry->getDescription());
         $stmt->bindParam(":book_id", $entry->getBook()->getId());
         $stmt->bindParam(":user_id", $entry->getUser()->getId());
@@ -80,5 +83,8 @@ final class BookEntryDao {
         $statement = Database::getDatabase()->prepare($sql);
         $statement->execute(array(":id" => $id));
     }
-
+    
+    private static function formatDateTime(DateTime $date) {
+        return $date->format(DateTime::ISO8601);
+    }
 }

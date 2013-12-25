@@ -19,7 +19,7 @@
 </thead>
 {foreach $entries as $entry}
     <tr>
-        <td><div class="entryDate">{$entry->getDate()}</div></td>
+        <td><div class="entryDate">{$entry->getFormattedDate()}</div></td>
         <td><div class="entryAmount">{$entry->getAmount()}&euro;</div></td>
         <td><div class="entryDescription">{$entry->getDescription()}</div></td>
         <td><div class="entryUserName">{$entry->getUser()->getName()}</div></td>

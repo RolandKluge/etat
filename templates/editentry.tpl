@@ -5,6 +5,9 @@
 </div>
 <h1>{$title}</h1>
 <form id="editEntryForm" method="get" action="editentry.php">
+    <label for="bookName">Buch:</label>
+    <input name="bookName" type="text" value='{$book->getName()}' readonly="true"/>
+    <br/>
     <label for="amount">Betrag:</label>
     <input id="amount" name="amount" type="text" size="4" value='{$amount}'/>Euro
     <span id="amountNote" class="errorMessage"></span>
@@ -19,7 +22,7 @@
     <select name="user" >
         {foreach $users as $u}
             <option value="{$u->getId()}"
-                {if $user === $u}selected=""{/if}
+                {if $user->getId() === $u->getId()}selected=""{/if}
                 >{$u->getName()}</option>
         {/foreach}
     </select>

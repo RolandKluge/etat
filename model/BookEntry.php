@@ -32,6 +32,10 @@ final class BookEntry {
     public function getDate() {
         return $this->date;
     }
+    
+    public function getFormattedDate() {
+        return $this->date->format("d.m.Y");
+    }
 
     public function setDate($date) {
         $this->date = $date;
