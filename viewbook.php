@@ -14,6 +14,7 @@ if($book)
     $smarty->assign("title", "Einträge in " . $book->getName());
     $smarty->assign("book", $book);
     $smarty->assign("entries", $entryDao->getEntries($book));
+    $smarty->assign('links', array(array('url' => './index.php', 'label' => LABEL_HOME)));
 }
 else {
     $smarty->assign("title", "Unbekanntes Buch!");

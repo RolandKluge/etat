@@ -1,7 +1,4 @@
 {include file='header.tpl'}
-<div class="homeLink">
-    <a href="./index.php">{$homeLinkLabel}</a>
-</div>
 <h1>{$title}</h1>
 <a href="./editentry.php?action=new&bookId={$book->getId()}">
     <div id="newEntry">
@@ -11,11 +8,17 @@
 </a>
 <br style="clear:both"/>
 <table id="entriesList">
+    <col width='15%'>
+    <col width='15%'>
+    <col width='40%'>
+    <col width='15%'>
+    <col width='15%'>
     <thead>
     <td>Datum</td>
     <td>Betrag</td>
     <td>Beschreibung</td>
     <td>Benutzer</td>
+    <td></td>
 </thead>
 {foreach $entries as $entry}
     <tr>

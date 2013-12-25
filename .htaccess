@@ -1,0 +1,5 @@
+AuthUserFile /s21/projekte/etat/.htpasswd
+AuthName "Bitte einloggen!"
+AuthType Basic
+Require valid-user
+DirectoryIndex index.php

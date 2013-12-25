@@ -38,12 +38,15 @@ switch ($action) {
         $smarty->assign('user', NULL);
         $smarty->assign('users', $bookDao->getUsers($book));
 
+        configure_links($smarty, $book);
+
         $smarty->display('editentry.tpl');
 
         break;
     case EDIT_ACTION:
         $id = get_param('id');
         $entry = $entryDao->get($id);
+        $book = $entry->getBook();
 
         $title = 'Eintrag ' . $entry->getId() . ' bearbeiten';
 
@@ -56,10 +59,12 @@ switch ($action) {
         $smarty->assign('amount', $entry->getAmount());
         $smarty->assign('date', $entry->getFormattedDate());
         $smarty->assign('description', $entry->getDescription());
-        $smarty->assign('book', $entry->getBook());
+        $smarty->assign('book', $book);
 
         $smarty->assign('user', $entry->getUser());
-        $smarty->assign('users', $userDao->getAll());
+        $smarty->assign('users', $bookDao->getUsers($book));
+
+        configure_links($smarty, $book);
 
         $smarty->display('editentry.tpl');
 
@@ -98,3 +103,11 @@ switch ($action) {
         break;
 }
 
+function configure_links(Smarty $smarty, Book $book) {
+
+    $smarty->assign('links', array(
+        array('url' => './index.php', 'label' => LABEL_HOME),
+        array('url' => './viewbook.php?id=' . $book->getId(),
+            'label' => LABEL_OVERVIEW_OF . $book->getName())
+    ));
+}

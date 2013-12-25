@@ -24,6 +24,8 @@ switch ($action) {
         $smarty->assign('action', SAVE_ACTION);
         $smarty->assign('name', '');
         $smarty->assign('id', '');
+        $smarty->assign('links', array(array('url' => './index.php', 'label' => LABEL_HOME)));
+        
         $smarty->display('edituser.tpl');
 
         break;
@@ -38,6 +40,8 @@ switch ($action) {
         $smarty->assign('action', SAVE_ACTION);
         $smarty->assign('name', $user->getName());
         $smarty->assign('id', $id);
+        $smarty->assign('links', array(array('url' => './index.php', 'label' => LABEL_HOME)));
+        
         $smarty->display('edituser.tpl');
 
         break;

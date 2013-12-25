@@ -4,4 +4,8 @@ define("DB", "mysql:host=<database_host>;dbname=<database_name>;charset=utf8");
 define("DB_USER", "<db_username>");
 define("DB_PASSWORD", "<db_password>");
 
-?>
+define("FS_ROOT", "<project-path-goes-here>");
+define("SMARTY_DIR", FS_ROOT . "lib/smarty/");
+
+define("LABEL_HOME", "Home");
+define("LABEL_OVERVIEW_OF", "Übersicht über ");

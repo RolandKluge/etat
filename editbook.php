@@ -28,6 +28,7 @@ switch ($action) {
         $smarty->assign('id', '');
         $smarty->assign('users', $userDao->getAll());
         $smarty->assign('bookUsers', array());
+        $smarty->assign('links', array(array('url' => './index.php', 'label' => LABEL_HOME)));
         
         $smarty->display('editbook.tpl');
 
@@ -47,6 +48,7 @@ switch ($action) {
         $smarty->assign('id', $id);
         $smarty->assign('users', $userDao->getAll());
         $smarty->assign('bookUsers', $bookDao->getUsers($book));
+        $smarty->assign('links', array(array('url' => './index.php', 'label' => LABEL_HOME)));
         
         $smarty->display('editbook.tpl');
 

@@ -41,6 +41,9 @@ final class BookEntryDao {
 
             array_push($result, $entry);
         }
+        
+        uasort($result, 'BookEntry::compareByDateRevers');
+        
         return $result;
     }
 

@@ -29,6 +29,9 @@ final class BookEntry {
         $this->amount = $amount;
     }
 
+    /**
+     * @return DateTime the date of this entry
+     */
     public function getDate() {
         return $this->date;
     }
@@ -63,6 +66,13 @@ final class BookEntry {
 
     public function getDescription() {
         return $this->description;
+    }
+    
+    public static function compareByDateRevers(BookEntry $e1, BookEntry $e2) {
+        $t1 = $e1->getDate()->getTimestamp();
+        $t2 = $e2->getDate()->getTimestamp();
+        
+        return -($t1 - $t2);
     }
 
 }

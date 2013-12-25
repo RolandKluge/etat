@@ -1,8 +1,5 @@
 {include file='header.tpl'}
 <script src="static/js/editentry.js"></script>
-<div class="homeLink">
-    <a href="./index.php">Home</a>
-</div>
 <h1>{$title}</h1>
 <form id="editEntryForm" method="get" action="editentry.php">
     <label for="bookName">Buch:</label>
@@ -23,8 +20,8 @@
     <select name="user" >
         {foreach $users as $u}
             <option value="{$u->getId()}"
-                {if $user->getId() === $u->getId()}selected=""{/if}
-                >{$u->getName()}</option>
+                    {if $user && $user->getId() === $u->getId()}selected=""{/if}
+                    >{$u->getName()}</option>
         {/foreach}
     </select>
     <br/>

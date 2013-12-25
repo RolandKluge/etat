@@ -48,5 +48,6 @@ $(document).ready(function() {
     validateForm();
     $('#amount').change(validateForm);
     $('#date').change(validateForm);
+    $('#date').datepicker({ dateFormat: "dd.mm.yy" });
 });
 
