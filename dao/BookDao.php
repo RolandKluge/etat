@@ -104,6 +104,16 @@ final class BookDao {
         $userDao->drop($row['user_id']);
     }
 
+    public function getRealUsers(Book $book) {
+        $users = array();
+        foreach ($this->getUsers($book) as $user) {
+            if ($user->isReal()) {
+                array_push($users, $user);
+            }
+        }
+        return $users;
+    }
+
     public function getUsers(Book $book) {
         $sql = "SELECT * FROM users_to_books JOIN users ON users_to_books.user_id = users.id WHERE book_id = :book_id";
         $stmt = Database::getDatabase()->prepare($sql);
@@ -114,9 +124,7 @@ final class BookDao {
         $userDao = new UserDao();
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
             $user = $userDao->get($row['user_id']);
-            if ($user->isReal()) {
-                $users[$user->getId()] = $user;
-            }
+            array_push($users, $user);
         }
         return $users;
     }
@@ -124,7 +132,7 @@ final class BookDao {
     public function getBookToUsersMapping(array $books) {
         $result = array();
         foreach ($books as $book) {
-            $result[$book->getId()] = $this->getUsers($book);
+            $result[$book->getId()] = $this->getRealUsers($book);
         }
         return $result;
     }
@@ -149,43 +157,6 @@ final class BookDao {
         $stmt = Database::getDatabase()->prepare($sql);
         $stmt->bindParam(":book_id", $book->getId());
         $stmt->bindParam(":user_id", $user->getId());
-        $stmt->execute();
-    }
-
-    /*
-     * Section on 'book entries'
-     */
-
-    public function getEntries(Book $book) {
-        $bookEntryMapper = new BookEntryMapper();
-        $userDao = new UserDao();
-
-        $sql = "SELECT * FROM entries WHERE book_id = :book_id";
-        $stmt = Database::getDatabase()->prepare($sql);
-        $stmt->bindParam(":book_id", $book->getId());
-        $stmt->execute();
-
-        $result = array();
-        foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
-            $entry = $bookEntryMapper->map($row);
-
-            $entry->setBook($book);
-            $entry->setUser($userDao->get($row['user_id']));
-
-            array_push($result, $entry);
-        }
-        return $array;
-    }
-
-    public function addEntry(BookEntry $entry) {
-        $sql = 'INSERT INTO entries (amount, date_time, description, book_id, user_id)' .
-                ' VALUES (:amount, :date_time, :descriptin, :book_id, :user_id)';
-        $stmt = Database::getDatabase()->prepare($sql);
-        $stmt->bindParam(":amount", $entry->getAmount());
-        $stmt->bindParam(":date_time", $entry->getDateTime());
-        $stmt->bindParam(":description", $entry->getDescription());
-        $stmt->bindParam(":book_id", $entry->getBook()->getId());
-        $stmt->bindParam(":user_id", $entry->getUser()->getId());
         $stmt->execute();
     }
 

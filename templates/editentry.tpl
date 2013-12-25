@@ -14,8 +14,15 @@
     <span id="dateNote" class="errorMessage"></span>
     <br/>
     <label for="description">Beschreibung</label>
-    <input name="description" type="text" size="50" value='{$description}'/>
+    <input id='description' name="description" type="text" size="50" value='{$description}'/>
     <br/>
+    Vorschläge:
+    <div class='descriptionSuggestions'>
+        {foreach $descriptionSuggestions as $suggestion}
+            <div class='descriptionSuggestion'>{$suggestion}</div>
+        {/foreach}
+    </div>
+    <br style='clear:both;'/>
     <label for="users">Benutzer:</label>
     <select name="user" >
         {foreach $users as $u}

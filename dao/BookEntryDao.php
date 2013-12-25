@@ -11,13 +11,13 @@ include_once('dao/BookDao.php');
 include_once('dao/Database.php');
 
 final class BookEntryDao {
-    
+
     public function get($id) {
         $sql = "SELECT * FROM entries WHERE id = :id";
         $stmt = Database::getDatabase()->prepare($sql);
         $stmt->execute(array(":id" => $id));
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        
+
         $userDao = new UserDao();
         $bookDao = new BookDao();
         $user = $userDao->get($row['user_id']);
@@ -41,10 +41,26 @@ final class BookEntryDao {
 
             array_push($result, $entry);
         }
-        
+
         uasort($result, 'BookEntry::compareByDateRevers');
-        
+
         return $result;
+    }
+
+    public function getRecentDescriptions(Book $book, $limit) {
+        $entries = $this->getEntries($book);
+        $resultSet = array();
+        foreach ($entries as $entry) {
+            if (count($resultSet) >= $limit) {
+                break;
+            }
+            $desc = $entry->getDescription();
+            if ($desc != '') {
+                $resultSet[$desc] = 1;
+            }
+        }
+
+        return array_keys($resultSet);
     }
 
     public function save(BookEntry $entry) {
@@ -86,8 +102,9 @@ final class BookEntryDao {
         $statement = Database::getDatabase()->prepare($sql);
         $statement->execute(array(":id" => $id));
     }
-    
+
     private static function formatDateTime(DateTime $date) {
         return $date->format(DateTime::ISO8601);
     }
+
 }

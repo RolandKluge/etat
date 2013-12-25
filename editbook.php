@@ -47,7 +47,7 @@ switch ($action) {
         $smarty->assign('description', $book->getDescription());
         $smarty->assign('id', $id);
         $smarty->assign('users', $userDao->getAll());
-        $smarty->assign('bookUsers', $bookDao->getUsers($book));
+        $smarty->assign('bookUsers', $bookDao->getRealUsers($book));
         $smarty->assign('links', array(array('url' => './index.php', 'label' => LABEL_HOME)));
         
         $smarty->display('editbook.tpl');

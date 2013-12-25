@@ -49,5 +49,8 @@ $(document).ready(function() {
     $('#amount').change(validateForm);
     $('#date').change(validateForm);
     $('#date').datepicker({ dateFormat: "dd.mm.yy" });
+    $('.descriptionSuggestion').click(function() {
+       $('#description').attr('value', $(this).text());
+    });
 });
 

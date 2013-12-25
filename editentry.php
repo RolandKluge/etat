@@ -33,6 +33,7 @@ switch ($action) {
         $smarty->assign('amount', '');
         $smarty->assign('date', date('d.m.Y'));
         $smarty->assign('description', '');
+        $smarty->assign('descriptionSuggestions', $entryDao->getRecentDescriptions($book, 6));
         $smarty->assign('book', $book);
 
         $smarty->assign('user', NULL);
@@ -59,6 +60,7 @@ switch ($action) {
         $smarty->assign('amount', $entry->getAmount());
         $smarty->assign('date', $entry->getFormattedDate());
         $smarty->assign('description', $entry->getDescription());
+        $smarty->assign('descriptionSuggestions', $entryDao->getRecentDescriptions($book, 6));
         $smarty->assign('book', $book);
 
         $smarty->assign('user', $entry->getUser());

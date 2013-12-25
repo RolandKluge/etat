@@ -145,3 +145,16 @@
     padding-right: 5px;
 }
 
+
+/* =============================================================================
+ * edientry
+ * =============================================================================
+ */
+
+.descriptionSuggestion {
+    float: left;
+    border: #eeeeee solid 1px;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 5px;
+}
