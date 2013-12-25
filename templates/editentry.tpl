@@ -1,11 +1,13 @@
 {include file='header.tpl'}
+<script src="static/js/editentry.js"></script>
 <div class="homeLink">
     <a href="./index.php">Home</a>
 </div>
 <h1>{$title}</h1>
 <form id="editEntryForm" method="get" action="editentry.php">
     <label for="amount">Betrag:</label>
-    <input name="amount" type="text" size="4" value='{$amount}'/>Euro
+    <input id="amount" name="amount" type="text" size="4" value='{$amount}'/>Euro
+    <span id="amountNote" class="errorMessage"></span>
     <br/>
     <label for="date">Datum:</label>
     <input name="date" type="text" size="10" value='{$date}'/>
@@ -25,6 +27,6 @@
     <input name="id" type="hidden" value="{$id}"></input>
     <input name="book" type="hidden" value="{$book->getId()}"></input>
     <input name="action" type="hidden" value="{$action}"></input>
-    <button type="submit">Speichern</button>
+    <button id="submit" type="submit">Speichern</button>
 </form>
 {include file='footer.tpl'}
