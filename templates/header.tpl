@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width" />
         <title>{$title}</title>
         <link rel="stylesheet" href="static/css/stylesheet.css">
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
     </head>
     <body>
