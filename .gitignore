@@ -5,3 +5,4 @@ config/configure.php
 .htaccess
 .htpasswd
 
+templates_c
