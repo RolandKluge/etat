@@ -34,8 +34,8 @@ function validateForm() {
     var everythingOk = true;
     everythingOk &= validateAmount();
     everythingOk &= validateDate();
-    
-    if(!everythingOk)
+
+    if (!everythingOk)
     {
         $('#submit').attr('disabled', 'true');
     }
@@ -46,11 +46,15 @@ function validateForm() {
 
 $(document).ready(function() {
     validateForm();
-    $('#amount').change(validateForm);
-    $('#date').change(validateForm);
-    $('#date').datepicker({ dateFormat: "dd.mm.yy" });
+    $('#amount, #date').change(validateForm);
+    $('#amount, #date').on('input', validateForm);
+    $('#date').datepicker({dateFormat: "dd.mm.yy", 
+        showOn: "button",
+        buttonImage: "./static/images/calendar.gif",
+        buttonImageOnly: true
+    });
     $('.descriptionSuggestion').click(function() {
-       $('#description').attr('value', $(this).text());
+        $('#description').attr('value', $(this).text());
     });
 });
 

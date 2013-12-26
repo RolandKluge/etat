@@ -1,6 +1,5 @@
 {include file='header.tpl'}
 <script src="static/js/editentry.js"></script>
-<h1>{$title}</h1>
 <form id="editEntryForm" method="get" action="editentry.php">
     <label for="bookName">Buch:</label>
     <input name="bookName" type="text" value='{$book->getName()}' readonly="true"/>
@@ -21,6 +20,8 @@
     <div class='descriptionSuggestions'>
         {foreach $descriptionSuggestions as $suggestion}
             <div class='descriptionSuggestion'>{$suggestion}</div>
+        {foreachelse}
+            <div id='noSuggestions'>Keine Vorschläge</div>
         {/foreach}
     </div>
     
@@ -36,6 +37,6 @@
     <input name="id" type="hidden" value="{$id}"></input>
     <input name="book" type="hidden" value="{$book->getId()}"></input>
     <input name="action" type="hidden" value="{$action}"></input>
-    <button id="submit" type="submit">Speichern</button>
+    <button id="save" id="submit" type="submit">Speichern</button>
 </form>
 {include file='footer.tpl'}

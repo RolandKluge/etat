@@ -7,50 +7,90 @@
  * =============================================================================
  */
 
+@media screen and (max-device-width: 480px) {
+    * {
+        font-family: sans-serif;
+        font-size: 24px;
+    }
+    
+    .ui-datepicker-trigger {
+        display: none !important;
+    }
+    
+}
+
 * {
     font-family: sans-serif;
     font-size: 16px;
 }
 
-.footer {
+#content {
+    width: 100%;
+}
+
+#footer {
     margin-top: 3px;
-    height: 20px;
+    height: 30px;
     clear: both;
 }
 
-.header,
-.footer {
+#header *,
+#header, 
+#footer{
     background-color: #000066;
+    text-decoration: none;
+    color: white;
 }
 
 
-.header {
+#header {
     height: 40px;
+    width: 100%;
+    font-weight: bold;
 }
 
-.header ul {
-    list-style: none;
-}
-
-.header li {
-    list-style: none;
+#header #title {
+    float: left;
     display: inline-block;
 }
 
-.header li+li .link {
+#header #links {
+    margin-top: 5px;
+    float: right;
+}
+
+#header ul {
+    list-style: none;
+}
+
+#header li {
+    list-style: none;
+    /*display: inline-block;*/
+}
+
+#header .link+.link {
     border-left: white solid 1px;
     padding-left: 5px;
 }
 
-.header .link {
-    color: white;
+#header #title {
     height: 30px;
     line-height: 30px;
     vertical-align: middle;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    font-weight: bold;
+    border: white solid 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: 5px;
+    margin-top: 3px;
+}
+
+#header .link {
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    padding-right: 5px;
     display: inline-block;
+    float: left;
 }
 
 .errorMessage {
@@ -114,6 +154,10 @@
  * =============================================================================
  */
 
+#newEntry {
+    float: left;
+}
+
 #newEntry #icon {
     vertical-align: middle;
     display: inline-block;
@@ -160,6 +204,10 @@
     cursor: pointer;
 }
 
+.descriptionSuggestions #noSuggestions {
+    float: left;
+}
+
 form * {
     margin-top: 5px;
 }
@@ -176,6 +224,7 @@ form * {
     padding-right: 10px;
 }
 
+.ui-datepicker-trigger, 
 #editEntryForm #dateNote,
 #editEntryForm #amountNote,
 #editEntryForm #currency {
@@ -196,9 +245,9 @@ form * {
     float: left;
 }
 
-#editUserForm button,
-#editBookForm button, 
-#editEntryForm button {
+#editUserForm #save,
+#editBookForm #save, 
+#editEntryForm #save {
     margin-top: 15px;
     clear: both;
     float: left;

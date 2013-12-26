@@ -33,7 +33,7 @@ switch ($action) {
         $id = get_param('id');
         $user = $userDao->get($id);
 
-        $title = $user->getName() . ' bearbeiten';
+        $title = 'Benutzer ' . $user->getId() . ' bearbeiten';
 
         $smarty = new Smarty();
         $smarty->assign('title', $title);

@@ -1,5 +1,4 @@
 {include file='header.tpl'}
-<h1>{$title}</h1>
 <a href="./editentry.php?action=new&bookId={$book->getId()}">
     <div id="newEntry">
         <div id="icon"><img src="static/images/entry_new.png" width="48" height="48"/></div>

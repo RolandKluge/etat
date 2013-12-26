@@ -2,21 +2,30 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width" />
         <title>{$title}</title>
         <link rel="stylesheet" href="static/css/stylesheet.css">
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.4.3/jquery.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
         <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
     </head>
     <body>
-        <div class="header">
-            <ul>
-                {foreach $links as $link}
-                    <li>
-                        <a href="{$link['url']}">
-                            <div class="link">{$link['label']}</div>
-                        </a>
-                    </li>
-                {/foreach}
-            </ul>
-        </div>
+        <div id="content">
+            <div id="header">
+                <div id="title">
+                    {$title}
+                </div>
+                <div id="links">
+                    {if $links}
+                        <div class="link">Gehe: </div>
+                        <div style="float: left;"><!--Dummy--></div>
+                    {/if}
+                    {foreach $links as $link}
+                        <div class="link">
+                            <a href="{$link['url']}">
+                                {$link['label']}
+                            </a>
+                        </div>
+                    {/foreach}
+                </div>
+            </div>

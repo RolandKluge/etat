@@ -1,5 +1,4 @@
 {include file='header.tpl'}
-<h1>{$title}</h1>
 <h2>Bücher</h2>
 <ul id="booksList">
     {foreach $books as $book}
