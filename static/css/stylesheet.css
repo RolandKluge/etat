@@ -147,7 +147,7 @@
 
 
 /* =============================================================================
- * edientry
+ * editentry
  * =============================================================================
  */
 
@@ -158,4 +158,49 @@
     padding: 5px;
     margin: 5px;
     cursor: pointer;
+}
+
+form * {
+    margin-top: 5px;
+}
+
+#editUserForm label,
+#editBookForm label,
+#editEntryForm label {
+    width: 150px;
+    display: block;
+    text-align: right;
+    font-weight: bold;
+    float: left;
+    clear: both;
+    padding-right: 10px;
+}
+
+#editEntryForm #dateNote,
+#editEntryForm #amountNote,
+#editEntryForm #currency {
+    display: block;
+    float: left;
+    margin-left: 5px;
+}
+
+#editUserForm input,
+#editBookForm input,
+#editEntryForm input {
+    float: left;
+    width: 300px;
+}
+
+#editBookForm select, 
+#editEntryForm select {
+    float: left;
+}
+
+#editUserForm button,
+#editBookForm button, 
+#editEntryForm button {
+    margin-top: 15px;
+    clear: both;
+    float: left;
+    margin-left: 160px;
 }
