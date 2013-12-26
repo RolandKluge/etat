@@ -1,4 +1,7 @@
 /nbproject/*
 config/configure.php
 
-/templates_c/
+/templates_c/.htaccess
+.htaccess
+.htpasswd
+

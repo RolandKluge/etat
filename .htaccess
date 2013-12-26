@@ -1,5 +1,9 @@
-AuthUserFile /s21/projekte/etat/.htpasswd
+AddType x-mapp-php5 .php 
+AddHandler x-mapp-php5 .php
+
+AuthUserFile /kunden/homepages/18/d190627459/htdocs/roland_web/etat/.htpasswd
 AuthName "Bitte einloggen!"
 AuthType Basic
 Require valid-user
 DirectoryIndex index.php
+
