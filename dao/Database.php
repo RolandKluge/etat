@@ -27,7 +27,7 @@ class Database {
     public static function createStatement($sql) {
         $statement = Database::getDatabase()->query($sql, PDO::FETCH_ASSOC);
         if ($statement === false) {
-            Database::throwDbError($this->getDatabase()->errorInfo());
+            Database::throwDbError(Database::getDatabase()->errorInfo());
         }
         return $statement;
     }
