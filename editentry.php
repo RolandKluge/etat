@@ -79,7 +79,10 @@ switch ($action) {
         $userId = get_param('user');
         $bookId = get_param('book');
 
-        $date = DateTime::createFromFormat('d.m.Y', $formattedDate);
+        // Contains the date in the German format: d.m.y
+        $dateComponents = explode('.', $formattedDate);
+        $date = new DateTime();
+        $date->setDate($dateComponents[2], $dateComponents[1], $dateComponents[0]);
 
         $entry = new BookEntry();
         $entry->setId($id);
