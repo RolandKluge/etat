@@ -38,5 +38,5 @@ function get_query_string() {
 }
 
 function has_get_param($key) {
-    return get_param($key) != NULL;
+    return filter_has_var(INPUT_GET, $key);
 }
