@@ -17,15 +17,13 @@ if ($book) {
     $entryCount = $entryDao->getEntryCount($book);
     
     if (has_get_param('limitFrom')) {
-        $limitFrom = (int) get_param('limitFrom') - 1;
-        $limitFrom = max(0, $limitFrom);
+        $limitFrom = max(0, (int) get_param('limitFrom') - 1);
     } else {
         $limitFrom = 0;
     }
 
     if (has_get_param('limitTo')) {
-        $limitTo = (int) get_param('limitTo') - 1;
-        $limitTo = min($entryCount - 1, $limitTo);
+        $limitTo = min($entryCount, (int) get_param('limitTo')) - 1;
     } else {
         $limitTo = min($entryCount, $limitFrom + $defaultVisibleEntryCount) - 1;
     }
