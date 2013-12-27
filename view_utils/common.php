@@ -29,12 +29,11 @@ function multi_get_param($key) {
             array_push($result, $keyValue[1]);
         }
     }
-    
     return $result;
 }
 
 function get_query_string() {
-    return filter_input(INPUT_SERVER, 'QUERY_STRING');
+	return filter_var(isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : NULL, FILTER_DEFAULT);
 }
 
 function has_get_param($key) {

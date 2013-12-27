@@ -62,9 +62,10 @@ final class BookDao {
     public function addUser(Book $book, User $user) {
         $sql = "INSERT INTO users_to_books (user_id, book_id) VALUES (:user_id, :book_id)";
         $statement = Database::getDatabase()->prepare($sql);
-        $statement->bindParam(":user_id", $user->getId());
-        $statement->bindParam(":book_id", $book->getId());
+        $statement->bindParam(":user_id", $user->getId(), PDO::PARAM_INT);
+        $statement->bindParam(":book_id", $book->getId(), PDO::PARAM_INT);
         $statement->execute();
+
     }
 
     public function drop($id) {

@@ -16,7 +16,7 @@ final class Book {
     }
     
     public function setId($id) {
-        $this->id = $id;
+        $this->id = (int)$id;
     }
     
     public function getName() {
