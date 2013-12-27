@@ -13,6 +13,7 @@
         font-size: 24px;
     }
     
+    /* Hide date picker as it is not optimized for mobile devices */
     .ui-datepicker-trigger {
         display: none !important;
     }
@@ -52,6 +53,14 @@
 #header #title {
     float: left;
     display: inline-block;
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    border: white solid 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin-left: 5px;
+    margin-top: 3px;
 }
 
 #header #links {
@@ -71,17 +80,6 @@
 #header .link+.link {
     border-left: white solid 1px;
     padding-left: 5px;
-}
-
-#header #title {
-    height: 30px;
-    line-height: 30px;
-    vertical-align: middle;
-    border: white solid 2px;
-    padding-left: 5px;
-    padding-right: 5px;
-    margin-left: 5px;
-    margin-top: 3px;
 }
 
 #header .link {
@@ -197,7 +195,7 @@
 
 .descriptionSuggestion {
     float: left;
-    border: #eeeeee solid 1px;
+    border: #AAAAAA solid 2px;
     border-radius: 5px;
     padding: 5px;
     margin: 5px;

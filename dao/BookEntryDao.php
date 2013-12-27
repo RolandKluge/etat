@@ -26,13 +26,28 @@ final class BookEntryDao {
         return $entry;
     }
 
-    public function getEntries(Book $book) {
+    public function getEntryCount(Book $book) {
+        $sql = "SELECT COUNT(*) as count FROM entries WHERE book_id = :book_id";
+        $stmt = Database::getDatabase()->prepare($sql);
+        $stmt->execute(array(":book_id" => $book->getId()));
+
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $count = $row['count'];
+        return $count;
+    }
+
+    public function getEntries(Book $book, $limitFrom, $limitTo) {
         $bookEntryMapper = new BookEntryMapper();
         $userDao = new UserDao();
 
-        $sql = "SELECT * FROM entries WHERE book_id = :book_id";
+        $sql = "SELECT * FROM entries WHERE book_id = :book_id "
+                . " ORDER BY date DESC "
+                . " LIMIT :limit_from, :limit_to";
         $stmt = Database::getDatabase()->prepare($sql);
-        $stmt->execute(array(":book_id" => $book->getId()));
+        $stmt->bindValue(":limit_from", $limitFrom, PDO::PARAM_INT);
+        $stmt->bindValue(":limit_to", $limitTo, PDO::PARAM_INT);
+        $stmt->bindParam(":book_id", $book->getId());
+        $stmt->execute();
 
         $result = array();
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
@@ -42,19 +57,24 @@ final class BookEntryDao {
             array_push($result, $entry);
         }
 
-        uasort($result, 'BookEntry::compareByDateRevers');
+        // uasort($result, 'BookEntry::compareByDateRevers');
 
         return $result;
     }
 
     public function getRecentDescriptions(Book $book, $limit) {
-        $entries = $this->getEntries($book);
+        
+        $sql = "SELECT DISTINCT description, date FROM entries WHERE book_id = :book_id "
+                . " ORDER BY date DESC "
+                . " LIMIT 0, :limit_to";
+        $stmt = Database::getDatabase()->prepare($sql);
+        $stmt->bindParam(":book_id", $book->getId(), PDO::PARAM_INT);
+        $stmt->bindValue(":limit_to", $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        
         $resultSet = array();
-        foreach ($entries as $entry) {
-            if (count($resultSet) >= $limit) {
-                break;
-            }
-            $desc = $entry->getDescription();
+        foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            $desc = $row['description'];
             if ($desc != '') {
                 $resultSet[$desc] = 1;
             }

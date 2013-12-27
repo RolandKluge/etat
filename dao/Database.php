@@ -16,6 +16,7 @@ class Database {
         if (self::$db == null) {
             try {
                 self::$db = new PDO(DB, DB_USER, DB_PASSWORD);
+                self::$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
             } catch (Exception $ex) {
                 throw new Exception('DB connection error: ' . $ex->getMessage());
             }

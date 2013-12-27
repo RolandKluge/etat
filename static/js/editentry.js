@@ -37,10 +37,10 @@ function validateForm() {
 
     if (!everythingOk)
     {
-        $('#submit').attr('disabled', 'true');
+        $('#save').attr('disabled', 'true');
     }
     else {
-        $('#submit').removeAttr('disabled');
+        $('#save').removeAttr('disabled');
     }
 }
 
