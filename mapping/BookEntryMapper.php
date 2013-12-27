@@ -20,6 +20,12 @@ class BookEntryMapper {
     }
 
     private static function createDateTime($input) {
-        return DateTime::createFromFormat('Y-n-j', $input);
+        // Too new, not supported before PHP 5.3
+        // return DateTime::createFromFormat('Y-n-j', $input);
+        $dateComponents = explode('-', $input);
+        $date = new DateTime();
+        $date->setDate($dateComponents[0], $dateComponents[1], $dateComponents[2]);
+        return $date;
     }
+
 }
