@@ -28,6 +28,11 @@ if ($book) {
         $limitTo = min($entryCount, $limitFrom + $defaultVisibleEntryCount) - 1;
     }
     
+    if ($limitFrom > $limitTo)
+    {
+        $limitFrom = $limitTo;
+    }
+    
     $smarty->assign("title", "Einträge in " . $book->getName());
     $smarty->assign("book", $book);
     $smarty->assign("entries", $entryDao->getEntries($book, $limitFrom, $limitTo + 1));
