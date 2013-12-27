@@ -6,3 +6,5 @@ config/configure.php
 .htpasswd
 
 templates_c
+logfiles
+*.swp
