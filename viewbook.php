@@ -18,12 +18,14 @@ if ($book) {
     
     if (has_get_param('limitFrom')) {
         $limitFrom = (int) get_param('limitFrom') - 1;
+        $limitFrom = max(0, $limitFrom);
     } else {
         $limitFrom = 0;
     }
 
     if (has_get_param('limitTo')) {
         $limitTo = (int) get_param('limitTo') - 1;
+        $limitTo = min($entryCount - 1, $limitTo);
     } else {
         $limitTo = min($entryCount, $limitFrom + $defaultVisibleEntryCount) - 1;
     }
