@@ -56,5 +56,6 @@ $(document).ready(function() {
     $('.descriptionSuggestion').click(function() {
         $('#description').attr('value', $(this).text());
     });
+    
 });
 

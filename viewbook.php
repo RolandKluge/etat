@@ -1,6 +1,6 @@
 <?php
 
-include_once('view_utils/viewbook_utils.php');
+include_once('view/common.php');
 
 $defaultVisibleEntryCount = 10;
 

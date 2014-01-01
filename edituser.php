@@ -3,7 +3,27 @@
 /*
  * Author: Roland Kluge
  */
-include_once('view_utils/edituser_utils.php');
+include_once('view/common.php');
+
+function available_actions() {
+    return array(EDIT_ACTION, NEW_ACTION, SAVE_ACTION, DROP_ACTION);
+}
+
+function is_valid_action($action) {
+    return in_array($action, available_actions());
+}
+
+function getLinks() {
+    return array(array('url' => './index.php', 'label' => LABEL_HOME));
+}
+
+function getTemplate() {
+    return 'edituser.tpl';
+}
+
+/*
+ * Main routine
+ */
 
 if (has_get_param('action') && is_valid_action(get_param('action'))) {
     $action = get_param('action');
@@ -23,7 +43,8 @@ switch ($action) {
         assignTitle($title, $smarty);
         assignLinks(getLinks(), $smarty);
         
-        $smarty->assign('action', SAVE_ACTION);
+        $smarty->assign('currentAction', $action);
+        $smarty->assign('submitAction', SAVE_ACTION);
         $smarty->assign('name', '');
         $smarty->assign('id', '');
         
@@ -45,7 +66,8 @@ switch ($action) {
         assignTitle($title, $smarty);
         assignLinks(getLinks(), $smarty);
         
-        $smarty->assign('action', SAVE_ACTION);
+        $smarty->assign('currentAction', $action);
+        $smarty->assign('submitAction', SAVE_ACTION);
         $smarty->assign('name', $user->getName());
         $smarty->assign('id', $id);
         
@@ -70,12 +92,4 @@ switch ($action) {
         $userDao->drop($id);
         header('Location: index.php', true, 302);
         break;
-}
-
-function getLinks() {
-    return array(array('url' => './index.php', 'label' => LABEL_HOME));
-}
-
-function getTemplate() {
-    return 'edituser.tpl';
 }

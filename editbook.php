@@ -3,12 +3,32 @@
 /*
  * Author: Roland Kluge
  */
-include_once('view_utils/editbook_utils.php');
+include_once('view/common.php');
+
+function available_actions() {
+    return array(EDIT_ACTION, NEW_ACTION, SAVE_ACTION, DROP_ACTION);
+}
+
+function is_valid_action($action) {
+    return in_array($action, available_actions());
+}
+
+function getLinks() {
+    return array(array('url' => './index.php', 'label' => LABEL_HOME));
+}
+
+function getTemplate() {
+    return 'editbook.tpl';
+}
+
+/*
+ * Main routine
+ */
 
 if (has_get_param('action') && is_valid_action(get_param('action'))) {
     $action = get_param('action');
 } else {
-    showError('Unknown action or missing action: ' . get_param('action'), 'editbook.tpl');
+    showError('Unknown action or missing action: ' . get_param('action'), getTemplate());
     return;
 }
 
@@ -24,14 +44,15 @@ switch ($action) {
         assignTitle($title, $smarty);
         assignLinks(getLinks(), $smarty);
 
-        $smarty->assign('action', SAVE_ACTION);
+        $smarty->assign('currentAction', $action);
+        $smarty->assign('submitAction', SAVE_ACTION);
         $smarty->assign('name', '');
         $smarty->assign('description', '');
         $smarty->assign('id', '');
         $smarty->assign('users', $userDao->getAll());
         $smarty->assign('bookUsers', array());
 
-        $smarty->display('editbook.tpl');
+        $smarty->display(getTemplate());
 
         break;
     case EDIT_ACTION:
@@ -39,7 +60,7 @@ switch ($action) {
         $book = $bookDao->get($id);
 
         if ($book == NULL) {
-            showError("No book could be found for ID " . $id, 'editbook.tpl');
+            showError("No book could be found for ID " . $id, getTemplate());
             return;
         }
         $title = $book->getName() . ' bearbeiten';
@@ -49,14 +70,15 @@ switch ($action) {
         assignTitle($title, $smarty);
         assignLinks(getLinks(), $smarty);
 
-        $smarty->assign('action', SAVE_ACTION);
+        $smarty->assign('currentAction', $action);
+        $smarty->assign('submitAction', SAVE_ACTION);
         $smarty->assign('name', $book->getName());
         $smarty->assign('description', $book->getDescription());
         $smarty->assign('id', $id);
         $smarty->assign('users', $userDao->getAll());
         $smarty->assign('bookUsers', $bookDao->getRealUsers($book));
 
-        $smarty->display('editbook.tpl');
+        $smarty->display(getTemplate());
         break;
     case SAVE_ACTION:
         $id = get_param('id');
@@ -83,6 +105,3 @@ switch ($action) {
         break;
 }
 
-function getLinks() {
-    return array(array('url' => './index.php', 'label' => LABEL_HOME));
-}

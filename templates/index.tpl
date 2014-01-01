@@ -26,9 +26,6 @@
                             </span>
                         </div>
                     </a>
-                    <div class='drop'>
-                        <a href="./editbook.php?action=drop&id={$book->getId()}">Löschen</a>
-                    </div>
                     <div class='edit'>
                         <a href="./editbook.php?action=edit&id={$book->getId()}">Bearbeiten</a>
                     </div>
@@ -61,9 +58,6 @@
                             <div class="userName">{$user->getName()}</div>
                         </div>
                         <br/>
-                        <div class='drop'>
-                            <a href="./edituser.php?action=drop&id={$user->getId()}">Löschen</a>
-                        </div>
                         <div class='edit'>
                             <a href="./edituser.php?action=edit&id={$user->getId()}">Bearbeiten</a>
                         </div>

@@ -28,7 +28,6 @@ Einträge: {$entryCount} - Zeige: {$limitFrom} bis {$limitTo}
         <td><div class="entryUserName">{$entry->getUser()->getName()}</div></td>
         <td>
             <a href="./editentry.php?action=edit&id={$entry->getId()}">Bearbeiten</a>
-            <a href="./editentry.php?action=drop&id={$entry->getId()}">Löschen</a>
         </td>
     <tr>
     {/foreach}

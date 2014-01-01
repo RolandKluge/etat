@@ -3,11 +3,35 @@
 /*
  * Author: Roland Kluge
  */
-include_once('view_utils/editentry_utils.php');
+include_once('view/common.php');
+
+function available_actions() {
+    return array(EDIT_ACTION, NEW_ACTION, SAVE_ACTION, DROP_ACTION);
+}
+
+function is_valid_action($action) {
+    return in_array($action, available_actions());
+}
+
+function configureLinks(Smarty $smarty, Book $book) {
+
+    $links = array(
+        array('url' => './index.php', 'label' => LABEL_HOME),
+        array('url' => './viewbook.php?id=' . $book->getId(),
+            'label' => LABEL_OVERVIEW_OF . $book->getName()));
+    assignLinks($links, $smarty);
+}
+
+function getTemplate() {
+    return 'editentry.tpl';
+}
+
+/*
+ * Main routine 
+ */
 
 if (has_get_param('action') && is_valid_action(get_param('action'))) {
     $action = get_param('action');
-    $errorMessage = '';
 } else {
     showError('Unknown action or missing action: ' . get_param('action'), getTemplate());
     return;
@@ -22,12 +46,12 @@ switch ($action) {
         $bookId = get_param('bookId');
         $book = $bookDao->get($bookId);
 
-        $title = 'Eintrag anlegen';
-
         $smarty = new Smarty();
 
-        $smarty->assign('title', $title);
-        $smarty->assign('action', SAVE_ACTION);
+        assignTitle('Eintrag anlegen', $smarty);
+
+        $smarty->assign('currentAction', $action);
+        $smarty->assign('submitAction', SAVE_ACTION);
 
         $smarty->assign('id', '');
         $smarty->assign('amount', '');
@@ -55,12 +79,12 @@ switch ($action) {
         
         $book = $entry->getBook();
 
-        $title = 'Eintrag ' . $entry->getId() . ' bearbeiten';
-
         $smarty = new Smarty();
 
-        $smarty->assign('title', $title);
-        $smarty->assign('action', SAVE_ACTION);
+        assignTitle('Eintrag ' . $entry->getId() . ' bearbeiten', $smarty);
+        
+        $smarty->assign('currentAction', $action);
+        $smarty->assign('submitAction', SAVE_ACTION);
 
         $smarty->assign('id', $entry->getId());
         $smarty->assign('amount', $entry->getAmount());
@@ -112,17 +136,4 @@ switch ($action) {
         $entryDao->drop($id);
         header('Location: viewbook.php?id=' . $book->getId(), true, 302);
         break;
-}
-
-function configureLinks(Smarty $smarty, Book $book) {
-
-    $links = array(
-        array('url' => './index.php', 'label' => LABEL_HOME),
-        array('url' => './viewbook.php?id=' . $book->getId(),
-            'label' => LABEL_OVERVIEW_OF . $book->getName()));
-    assignLinks($links, $smarty);
-}
-
-function getTemplate() {
-    return 'editentry.tpl';
 }

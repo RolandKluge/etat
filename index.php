@@ -2,7 +2,7 @@
 /*
  * Author: Roland Kluge
  */
-include_once('view_utils/common.php');
+include_once('view/common.php');
 
 $smarty = new Smarty();
 
