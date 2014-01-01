@@ -9,8 +9,8 @@ if (has_get_param('action') && is_valid_action(get_param('action'))) {
     $action = get_param('action');
     $errorMessage = '';
 } else {
-    $action = 'new';
-    $errorMessage = 'Unknown action or missing action: ' . get_param('action');
+    showError('Unknown action or missing action: ' . get_param('action'), getTemplate());
+    return;
 }
 
 $bookDao = new BookDao();
@@ -39,14 +39,20 @@ switch ($action) {
         $smarty->assign('user', NULL);
         $smarty->assign('users', $bookDao->getUsers($book));
 
-        configure_links($smarty, $book);
+        configureLinks($smarty, $book);
 
-        $smarty->display('editentry.tpl');
+        $smarty->display(getTemplate());
 
         break;
     case EDIT_ACTION:
         $id = get_param('id');
         $entry = $entryDao->get($id);
+        
+        if ($id == NULL)
+        {
+            showError("Cannot find an entry with ID " . $id, getTemplate());
+        }
+        
         $book = $entry->getBook();
 
         $title = 'Eintrag ' . $entry->getId() . ' bearbeiten';
@@ -66,9 +72,9 @@ switch ($action) {
         $smarty->assign('user', $entry->getUser());
         $smarty->assign('users', $bookDao->getUsers($book));
 
-        configure_links($smarty, $book);
+        configureLinks($smarty, $book);
 
-        $smarty->display('editentry.tpl');
+        $smarty->display(getTemplate());
 
         break;
     case SAVE_ACTION:
@@ -108,11 +114,15 @@ switch ($action) {
         break;
 }
 
-function configure_links(Smarty $smarty, Book $book) {
+function configureLinks(Smarty $smarty, Book $book) {
 
-    $smarty->assign('links', array(
+    $links = array(
         array('url' => './index.php', 'label' => LABEL_HOME),
         array('url' => './viewbook.php?id=' . $book->getId(),
-            'label' => LABEL_OVERVIEW_OF . $book->getName())
-    ));
+            'label' => LABEL_OVERVIEW_OF . $book->getName()));
+    assignLinks($links, $smarty);
+}
+
+function getTemplate() {
+    return 'editentry.tpl';
 }

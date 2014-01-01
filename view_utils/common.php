@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Author: Roland Kluge
  */
@@ -20,12 +21,11 @@ function get_param($key) {
 
 function multi_get_param($key) {
     $result = array();
-    
+
     $query = get_query_string();
     foreach (explode('&', $query) as $pair) {
         $keyValue = explode('=', $pair);
-        if ($keyValue[0] === $key)
-        {
+        if ($keyValue[0] === $key) {
             array_push($result, $keyValue[1]);
         }
     }
@@ -33,9 +33,26 @@ function multi_get_param($key) {
 }
 
 function get_query_string() {
-	return filter_var(isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : NULL, FILTER_DEFAULT);
+    return filter_var(isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : NULL, FILTER_DEFAULT);
 }
 
 function has_get_param($key) {
     return filter_has_var(INPUT_GET, $key);
+}
+
+function assignTitle($title, Smarty $smarty) {
+    $smarty->assign('title', $title);
+}
+
+function assignLinks(array $links, Smarty $smarty) {
+    $smarty->assign('links', $links);
+}
+
+function showError($errorMessage, $template) {
+    $smarty = new Smarty();
+    assignTitle(LABEL_ERROR, $smarty);
+    assignLinks(getLinks(), $smarty);
+    $smarty->assign('hasErrors', true);
+    $smarty->assign('errorMessage', $errorMessage);
+    $smarty->display($template);
 }

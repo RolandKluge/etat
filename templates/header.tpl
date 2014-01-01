@@ -29,3 +29,7 @@
                     {/foreach}
                 </div>
             </div>
+            {if {$hasErrors}}
+                <div class="errorMessage">{$errorMessage}</div>
+                <div style="display: none">
+            {/if}

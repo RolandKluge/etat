@@ -9,10 +9,9 @@ if (has_get_param('action') && is_valid_action(get_param('action'))) {
     $action = get_param('action');
     $errorMessage = '';
 } else {
-    $action = 'new';
-    $errorMessage = 'Unknown action or missing action: ' . get_param('action');
+    showError('Unknown action or missing action: ' . get_param('action'), getTemplate());
+    return;
 }
-
 $userDao = new UserDao();
 
 switch ($action) {
@@ -20,29 +19,37 @@ switch ($action) {
         $title = 'Benutzer anlegen';
 
         $smarty = new Smarty();
-        $smarty->assign('title', $title);
+        
+        assignTitle($title, $smarty);
+        assignLinks(getLinks(), $smarty);
+        
         $smarty->assign('action', SAVE_ACTION);
         $smarty->assign('name', '');
         $smarty->assign('id', '');
-        $smarty->assign('links', array(array('url' => './index.php', 'label' => LABEL_HOME)));
         
-        $smarty->display('edituser.tpl');
+        $smarty->display(getTemplate());
 
         break;
     case EDIT_ACTION:
         $id = get_param('id');
         $user = $userDao->get($id);
+        
+        if ($user == NULL) {
+            showError("No book could be found for ID " . $id, getTemplate());
+            return;
+        }
 
         $title = 'Benutzer ' . $user->getId() . ' bearbeiten';
 
         $smarty = new Smarty();
-        $smarty->assign('title', $title);
+        assignTitle($title, $smarty);
+        assignLinks(getLinks(), $smarty);
+        
         $smarty->assign('action', SAVE_ACTION);
         $smarty->assign('name', $user->getName());
         $smarty->assign('id', $id);
-        $smarty->assign('links', array(array('url' => './index.php', 'label' => LABEL_HOME)));
         
-        $smarty->display('edituser.tpl');
+        $smarty->display(getTemplate());
 
         break;
     case SAVE_ACTION:
@@ -65,3 +72,10 @@ switch ($action) {
         break;
 }
 
+function getLinks() {
+    return array(array('url' => './index.php', 'label' => LABEL_HOME));
+}
+
+function getTemplate() {
+    return 'edituser.tpl';
+}
