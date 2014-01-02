@@ -1,11 +1,21 @@
 <?php
 
-define("DB", "mysql:host=<database_host>;dbname=<database_name>;charset=utf8");
-define("DB_USER", "<db_username>");
-define("DB_PASSWORD", "<db_password>");
+include_once('config/configure_lang.php');
 
-define("FS_ROOT", "<project-path-goes-here>");
+define("DB_CHARSET", "utf8");
+define("DB_NAME", "<db-name>");
+//define("DB_SOCKET", "db-socket");
+define("DB_HOST", "<db-host>");
+
+if (defined(DB_SOCKET)) {
+    define("DB", "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET . ";unix_socket=" . DB_SOCKET);
+} else {
+    define("DB", "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET);
+}
+
+define("DB_USER", "etat");
+define("DB_PASSWORD", "etat");
+
+define("FS_ROOT", "/s21/projekte/etat/");
 define("SMARTY_DIR", FS_ROOT . "lib/smarty/");
 
-define("LABEL_HOME", "Home");
-define("LABEL_OVERVIEW_OF", "Übersicht über ");

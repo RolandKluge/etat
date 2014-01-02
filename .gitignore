@@ -1,6 +1,7 @@
 /nbproject/*
 config/configure.php
 
+/backups/*
 /templates_c/.htaccess
 .htaccess
 .htpasswd
@@ -8,3 +9,5 @@ config/configure.php
 templates_c
 logfiles
 *.swp
+
+/doc/.~lock.backlog.ods#
