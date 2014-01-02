@@ -1,8 +1,14 @@
 {include file='header.tpl'}
-<a href="./editentry.php?action=new&bookId={$book->getId()}">
+<a href="./editentry.php?action=new&book={$book->getId()}">
     <div id="newEntry">
         <div id="icon"><img src="static/images/entry_new.png" width="48" height="48"/></div>
         <div id="text">Eintrag hinzufügen...</div>
+    </div>
+</a>
+<a href="./monthlyBalance.php?month=1&year=2014&book={$book->getId()}">
+    <div id="monthlyBalance">
+        <div id="icon"><img src="static/images/sigma_upper.png" width="48" height="48"/></div>
+        <div id="text">Monatsstatistik...</div>
     </div>
 </a>
 <br style="clear:both"/>
@@ -27,7 +33,7 @@ Einträge: {$entryCount} - Zeige: {$limitFrom} bis {$limitTo}
         <td><div class="entryDescription">{$entry->getDescription()}</div></td>
         <td><div class="entryUserName">{$entry->getUser()->getName()}</div></td>
         <td>
-            <a href="./editentry.php?action=edit&id={$entry->getId()}">Bearbeiten</a>
+            <a href="./editentry.php?action=edit&entry={$entry->getId()}">Bearbeiten</a>
         </td>
     <tr>
     {/foreach}

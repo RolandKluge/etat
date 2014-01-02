@@ -19,7 +19,7 @@
         {/foreach}
     </select>
     <br/>
-    <input name="id" type="hidden" value="{$id}"></input>
+    <input name="book" type="hidden" value="{$id}"></input>
     <input name="action" type="hidden" value="{$submitAction}"></input>
     <button id="save" type="submit">Speichern</button>
 </form>
@@ -31,7 +31,7 @@
         <form id='dropBookForm' method="get" action="editbook.php"
               onsubmit="return confirm('Soll dieses Buch wirklich gelöscht werden?');">
             <input name='action' type='hidden' value='drop'/>
-            <input name='id' type='hidden' value='{$id}'/>
+            <input name='book' type='hidden' value='{$id}'/>
             <input type='submit' value='Buch löschen'/>
         </form>
     </div>

@@ -17,7 +17,7 @@ function configureLinks(Smarty $smarty, Book $book) {
 
     $links = array(
         array('url' => './index.php', 'label' => LABEL_HOME),
-        array('url' => './viewbook.php?id=' . $book->getId(),
+        array('url' => './viewbook.php?book=' . $book->getId(),
             'label' => LABEL_OVERVIEW_OF . $book->getName()));
     assignLinks($links, $smarty);
 }
@@ -43,7 +43,7 @@ $userDao = new UserDao();
 
 switch ($action) {
     case NEW_ACTION:
-        $bookId = get_param('bookId');
+        $bookId = get_param('book');
         $book = $bookDao->get($bookId);
 
         $smarty = new Smarty();
@@ -69,7 +69,7 @@ switch ($action) {
 
         break;
     case EDIT_ACTION:
-        $id = get_param('id');
+        $id = get_param('entry');
         $entry = $entryDao->get($id);
         
         if ($id == NULL)
@@ -102,7 +102,7 @@ switch ($action) {
 
         break;
     case SAVE_ACTION:
-        $id = get_param('id');
+        $id = get_param('entry');
         $amount = get_param('amount');
         $formattedDate = get_param('date');
         $description = get_param('description');
@@ -127,13 +127,13 @@ switch ($action) {
 
         $entryDao->save($entry);
 
-        header('Location: viewbook.php?id=' . $book->getId(), true, 302);
+        header('Location: viewbook.php?book=' . $book->getId(), true, 302);
         break;
     case DROP_ACTION:
-        $id = get_param('id');
+        $id = get_param('entry');
         $entry = $entryDao->get($id);
         $book = $entry->getBook();
         $entryDao->drop($id);
-        header('Location: viewbook.php?id=' . $book->getId(), true, 302);
+        header('Location: viewbook.php?book=' . $book->getId(), true, 302);
         break;
 }

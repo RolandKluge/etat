@@ -5,7 +5,7 @@
         {foreach $books as $book}
             <li>
                 <div class="book">
-                    <a href="./viewbook.php?id={$book->getId()}">
+                    <a href="./viewbook.php?book={$book->getId()}">
                         <div>
                             <img src="static/images/book.png" width="48" height="48"/>
                         </div>
@@ -27,7 +27,7 @@
                         </div>
                     </a>
                     <div class='edit'>
-                        <a href="./editbook.php?action=edit&id={$book->getId()}">Bearbeiten</a>
+                        <a href="./editbook.php?action=edit&book={$book->getId()}">Bearbeiten</a>
                     </div>
                 </div>
             </li>
@@ -59,7 +59,7 @@
                         </div>
                         <br/>
                         <div class='edit'>
-                            <a href="./edituser.php?action=edit&id={$user->getId()}">Bearbeiten</a>
+                            <a href="./edituser.php?action=edit&user={$user->getId()}">Bearbeiten</a>
                         </div>
                     </div>
                 </li>   
@@ -76,5 +76,11 @@
             </div>
         </li>
     </ul>
+</div>
+<h2>Verwaltung</h2>
+<div id='backup'>
+    <a href="./backup.php">
+        Backup durchführen
+    </a>
 </div>
 {include file='footer.tpl'}

@@ -7,7 +7,7 @@ define("DB_NAME", "<db-name>");
 //define("DB_SOCKET", "db-socket");
 define("DB_HOST", "<db-host>");
 
-if (defined(DB_SOCKET)) {
+if (defined("DB_SOCKET")) {
     define("DB", "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET . ";unix_socket=" . DB_SOCKET);
 } else {
     define("DB", "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET);

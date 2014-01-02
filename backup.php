@@ -1,5 +1,10 @@
 <?php
-include_once('../config/configure.php');
+/*
+ * Author: Rüdiger Kluge
+ * Author: Roland Kluge
+ */
+
+include_once('config/configure.php');
 ?>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"> 
@@ -35,18 +40,34 @@ include_once('../config/configure.php');
         echo "Filename: $file_name<br><br>";
         echo "Starte Backup<br><br>";
 
+        $exitCode = NULL;
+
         if (define(DB_SOCKET)) {
-            system(sprintf(
+            $errorMessage = system(sprintf(
                             'mysqldump --opt -S%s -h%s -u%s -p"%s" %s | gzip  > %s/%s', DB_SOCKET, $db_host, $db_user, $db_pass, $db_name, $path, $file_name
-            ));
+                    ), $exitCode
+            );
         } else {
-            system(sprintf(
+            $errorMessage = system(sprintf(
                             'mysqldump --opt -h%s -u%s -p"%s" %s | gzip  > %s/%s', $db_host, $db_user, $db_pass, $db_name, $path, $file_name
-            ));
+                    ), $exitCode);
         }
+
+        if ($exitCode != 0) {
+            $css = 'color: red;';
+            $errorMessage = "ERROR: $errorMessage";
+        } else {
+            $css = '';
+        }
+        
+        echo "<span style='$css'>Exit code: $exitCode $errorMessage</span><br/><br/>";
 
         echo "Backup fertig<br><br>";
         echo 'Ende';
         ?>
+        <hr/>
+        <p>
+            <a href='index.php'>Home</a>
+        </p>
     </body>
 </html>

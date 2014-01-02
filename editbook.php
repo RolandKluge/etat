@@ -56,7 +56,7 @@ switch ($action) {
 
         break;
     case EDIT_ACTION:
-        $id = get_param('id');
+        $id = get_param('book');
         $book = $bookDao->get($id);
 
         if ($book == NULL) {
@@ -81,7 +81,7 @@ switch ($action) {
         $smarty->display(getTemplate());
         break;
     case SAVE_ACTION:
-        $id = get_param('id');
+        $id = get_param('book');
         $name = get_param('name');
         $description = get_param('description');
         $userIds = multi_get_param('users');
@@ -99,7 +99,7 @@ switch ($action) {
         header('Location: index.php', true, 302);
         break;
     case DROP_ACTION:
-        $id = get_param('id');
+        $id = get_param('book');
         $bookDao->drop($id);
         header('Location: index.php', true, 302);
         break;

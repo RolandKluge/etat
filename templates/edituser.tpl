@@ -4,7 +4,7 @@
     <label for="name">Name</label>
     <input name="name" type="text" size="30" value='{$name}'/>
     <br/>
-    <input name="id" type="hidden" value="{$id}"></input>
+    <input name='user' type="hidden" value="{$id}"></input>
     <input name="action" type="hidden" value="{$submitAction}"></input>
     <button id="save" type="submit">Speichern</button>
 </form>
@@ -15,7 +15,7 @@
         <form id='dropUserForm' method="get" action="edituser.php"
               onsubmit="return confirm('Soll dieser Benutzer wirklich gelöscht werden?');">
             <input name='action' type='hidden' value='drop'/>
-            <input name='id' type='hidden' value='{$id}'/>
+            <input name='user' type='hidden' value='{$id}'/>
             <input type='submit' value='Benutzer löschen'/>
         </form>
     </div>

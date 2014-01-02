@@ -52,7 +52,7 @@ switch ($action) {
 
         break;
     case EDIT_ACTION:
-        $id = get_param('id');
+        $id = get_param('user');
         $user = $userDao->get($id);
         
         if ($user == NULL) {
@@ -75,7 +75,7 @@ switch ($action) {
 
         break;
     case SAVE_ACTION:
-        $id = get_param('id');
+        $id = get_param('user');
         $name = get_param('name');
 
         $user = new User();
@@ -88,7 +88,7 @@ switch ($action) {
         header('Location: index.php', true, 302);
         break;
     case DROP_ACTION:
-        $id = get_param('id');
+        $id = get_param('user');
         $userDao->drop($id);
         header('Location: index.php', true, 302);
         break;

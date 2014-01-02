@@ -13,7 +13,6 @@ $bookToUsers = $bookDao->getBookToUsersMapping($books);
 $userDao = new UserDao();
 $users = $userDao->getAll();
 
-
 $smarty->assign("title", "Übersicht");
 $smarty->assign("books", $books);
 $smarty->assign("bookToUsers", $bookToUsers);

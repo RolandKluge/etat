@@ -2,6 +2,7 @@ book.png        /usr/share/icons/oxygen/128x128/mimetypes/x-office-address-book.
 book_new.png    /usr/share/icons/oxygen/128x128/actions/address-book-new.png
 delete.png      /usr/share/icons/oxygen/48x48/actions/edit-delete.png
 entry_new.png   /usr/share/icons/oxygen/48x48/actions/view-barcode-add.png
+sigmas_upper_lower.png  https://commons.wikimedia.org/wiki/File:Greek_letter_sigma_serif%2Bsans.svg
 user.png        /usr/share/icons/oxygen/48x48/apps/system-users.png
 user_edit.png   /usr/share/icons/oxygen/48x48/actions/user-properties.png
 user_new.png    /usr/share/icons/oxygen/48x48/actions/user-group-new.png

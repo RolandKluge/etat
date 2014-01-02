@@ -156,16 +156,19 @@ h2 {
  * =============================================================================
  */
 
+#monthlyBalance, 
 #newEntry {
     float: left;
 }
 
+#monthlyBalance #icon, 
 #newEntry #icon {
     vertical-align: middle;
     display: inline-block;
     float: left;
 }
 
+#monthlyBalance #text, 
 #newEntry #text {
     vertical-align: middle;
     text-decoration: none;

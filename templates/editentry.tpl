@@ -49,7 +49,7 @@
         <form id='dropEntryForm' method="get" action="editentry.php" 
               onsubmit="return confirm('Soll dieser Eintrag wirklich gelöscht werden?');">
             <input name='action' type='hidden' value='drop'/>
-            <input name='id' type='hidden' value='{$id}'/>
+            <input name='entry' type='hidden' value='{$id}'/>
             <input type='submit' value='Eintrag löschen'/>
         </form>
     </div>
