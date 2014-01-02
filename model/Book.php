@@ -34,5 +34,5 @@ final class Book {
     public function getDescription() {
         return $this->description;
     }
-
+    
 }

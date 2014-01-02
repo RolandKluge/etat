@@ -36,6 +36,10 @@ final class BookEntryDao {
         return $count;
     }
 
+    public function getAllEntriesInBook(Book $book) {
+        return $this->getEntries($book, 0, $this->getEntryCount($book));
+    }
+
     public function getEntries(Book $book, $limitFrom, $limitTo) {
         $bookEntryMapper = new BookEntryMapper();
         $userDao = new UserDao();
@@ -62,8 +66,40 @@ final class BookEntryDao {
         return $result;
     }
 
-    public function getRecentDescriptions(Book $book, $limit) {
+    public function getEntriesByMonth(Book $book, $month, $year) {
+        $result = array();
+        foreach ($this->getAllEntriesInBook($book) as $entry) {
+            $date = $entry->getDate();
+            $entryMonth = (int) $date->format('m');
+            $entryYear = (int) $date->format('Y');
+            if ($month == $entryMonth && $year == $entryYear)
+            {
+                array_push($result, $entry);
+            }
+        }
+        return $result;
+    }
+
+    public function getUserToExpensesByMonth(Book $book, $month, $year) {
+        $bookDao = new BookDao();
+        $expenses = array();
+        foreach ($bookDao->getUsers($book) as $user) {
+            $expenses[$user->getID()] = 0.0;
+        }
         
+        foreach($this->getEntriesByMonth($book, $month, $year) as $entry)
+        {
+            $userId = $entry->getUser()->getId();
+            $amount = $entry->getAmount();
+            $expenses[$userId] += $amount;
+        }
+        
+        return $expenses;
+        
+    }
+
+    public function getRecentDescriptions(Book $book, $limit) {
+
         $sql = "SELECT DISTINCT description, date FROM entries WHERE book_id = :book_id "
                 . " ORDER BY date DESC "
                 . " LIMIT 0, :limit_to";
@@ -71,7 +107,7 @@ final class BookEntryDao {
         $stmt->bindParam(":book_id", $book->getId(), PDO::PARAM_INT);
         $stmt->bindValue(":limit_to", $limit, PDO::PARAM_INT);
         $stmt->execute();
-        
+
         $resultSet = array();
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
             $desc = $row['description'];

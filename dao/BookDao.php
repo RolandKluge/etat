@@ -31,7 +31,7 @@ final class BookDao {
             return $book;
         }
     }
-
+    
     public function save(Book $book) {
         if ($book->getId()) {
             $this->update($book);

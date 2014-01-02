@@ -74,5 +74,13 @@ final class BookEntry {
         
         return -($t1 - $t2);
     }
+    
+    public static function getAmountSum(array $entries) {
+        $sum = 0.0;
+        foreach ($entries as $entry) {
+            $sum += $entry->getAmount();
+        }
+        return $sum;
+    }
 
 }

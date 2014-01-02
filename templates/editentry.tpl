@@ -37,7 +37,7 @@
         {/foreach}
     </select>
 
-    <input name="id" type="hidden" value="{$id}"></input>
+    <input name="entry" type="hidden" value="{$id}"></input>
     <input name="book" type="hidden" value="{$book->getId()}"></input>
     <input name="action" type="hidden" value="{$submitAction}"></input>
     <button id="save" id="submit" type="submit">Speichern</button>
