@@ -5,12 +5,13 @@
         <div id="text">Eintrag hinzufügen...</div>
     </div>
 </a>
-<a href="./monthlyBalance.php?month=1&year=2014&book={$book->getId()}">
-    <div id="monthlyBalance">
-        <div id="icon"><img src="static/images/sigma_upper.png" width="48" height="48"/></div>
-        <div id="text">Monatsstatistik...</div>
-    </div>
-</a>
+<img src="static/images/sigma_upper.png" width="48" height="48"/>
+<form method="get" action="./monthlyBalance.php">
+    <input type="submit" value="Monatsstatistik"></input>
+    <select name="month"><option value="1">Januar</option></select>
+    <select name="year"><option value="2014">2014</option></select>
+    <input name="book" type="hidden" value="{$book->getId()}"/>
+</form>
 <br style="clear:both"/>
 Einträge: {$entryCount} - Zeige: {$limitFrom} bis {$limitTo}
 <table id="entriesList">
