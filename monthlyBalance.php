@@ -55,6 +55,9 @@ $entries = $entryDao->getEntriesByMonth($book, $month, $year);
 $amountSum = BookEntry::getAmountSum($entries);
 $users = $bookDao->getUsers($book);
 $userToAmount = $entryDao->getUserToExpensesByMonth($book, $month, $year);
+$defaultUser = $bookDao->getDefaultUser($book);
+
+$averageExpensesPerRealUser = ($amountSum - $userToAmount[$defaultUser->getId()]) / (count($users) - 1);
 
 $smarty = new Smarty();
 
@@ -63,9 +66,10 @@ assignTitle("Monatsstatistik von " . $book->getName() . sprintf(" %02d.%2d", $mo
 
 configureLinks($smarty, $book);
 $smarty->assign('hasErrors', false);
+$smarty->assign('book', $book);
 $smarty->assign('entryCount', count($entries));
 $smarty->assign('amountSum', $amountSum);
-$smarty->assign('averageExpensesPerUser', $amountSum / count($users));
+$smarty->assign('averageExpensesPerRealUser', $averageExpensesPerRealUser);
 $smarty->assign('users', $users);
 $smarty->assign('userToExpenses', $userToAmount);
 

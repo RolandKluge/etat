@@ -42,11 +42,13 @@ if ($limitFrom > $limitTo) {
 assignTitle("Einträge in " . $book->getName(), $smarty);
 assignLinks(array(array('url' => './index.php', 'label' => LABEL_HOME)), $smarty);
 
+$smarty->assign("hasErrors", false);
 $smarty->assign("book", $book);
 $smarty->assign("entries", $entryDao->getEntries($book, $limitFrom, $limitTo + 1));
 $smarty->assign('entryCount', $entryCount);
 $smarty->assign('limitFrom', $limitFrom + 1);
 $smarty->assign('limitTo', $limitTo + 1);
+$smarty->assign('years', $entryDao->getEntryYears($book));
 $smarty->assign('visibleEntryCount', $defaultVisibleEntryCount);
 $smarty->display(getTemplate());
 

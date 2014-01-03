@@ -61,8 +61,6 @@ final class BookEntryDao {
             array_push($result, $entry);
         }
 
-        // uasort($result, 'BookEntry::compareByDateRevers');
-
         return $result;
     }
 
@@ -72,8 +70,7 @@ final class BookEntryDao {
             $date = $entry->getDate();
             $entryMonth = (int) $date->format('m');
             $entryYear = (int) $date->format('Y');
-            if ($month == $entryMonth && $year == $entryYear)
-            {
+            if ($month == $entryMonth && $year == $entryYear) {
                 array_push($result, $entry);
             }
         }
@@ -86,16 +83,25 @@ final class BookEntryDao {
         foreach ($bookDao->getUsers($book) as $user) {
             $expenses[$user->getID()] = 0.0;
         }
-        
-        foreach($this->getEntriesByMonth($book, $month, $year) as $entry)
-        {
+
+        foreach ($this->getEntriesByMonth($book, $month, $year) as $entry) {
             $userId = $entry->getUser()->getId();
             $amount = $entry->getAmount();
             $expenses[$userId] += $amount;
         }
-        
+
         return $expenses;
-        
+    }
+
+    public function getEntryYears(Book $book) {
+        $result = array();
+        foreach ($this->getAllEntriesInBook($book) as $entry) {
+            $year = $entry->getDate()->format('Y');
+            if (!in_array($year, $result)) {
+                array_push($result, $year);
+            }
+        }
+        return $result;
     }
 
     public function getRecentDescriptions(Book $book, $limit) {

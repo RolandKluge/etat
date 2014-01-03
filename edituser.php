@@ -40,6 +40,7 @@ switch ($action) {
 
         $smarty = new Smarty();
         
+        markNoErrors($smarty);
         assignTitle($title, $smarty);
         assignLinks(getLinks(), $smarty);
         
@@ -63,6 +64,8 @@ switch ($action) {
         $title = 'Benutzer ' . $user->getId() . ' bearbeiten';
 
         $smarty = new Smarty();
+        
+        markNoErrors($smarty);
         assignTitle($title, $smarty);
         assignLinks(getLinks(), $smarty);
         

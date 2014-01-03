@@ -48,6 +48,10 @@ function assignLinks(array $links, Smarty $smarty) {
     $smarty->assign('links', $links);
 }
 
+function markNoErrors(Smarty $smarty){
+    $smarty->assign('hasErrors', false);
+}
+
 function showError($errorMessage, $template) {
     $smarty = new Smarty();
     assignTitle(LABEL_ERROR, $smarty);

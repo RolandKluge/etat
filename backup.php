@@ -18,7 +18,6 @@ include_once('config/configure.php');
         <?php
         /* database, server, user information */
         $db_host = DB_HOST;        // Name des Datenbankhost
-        $db_sock = DB_SOCKET;      // Socket
         $db_user = DB_USER;        // Datenbank Benutzern Name
         $db_pass = DB_PASSWORD;    // Datenbank Passwort
         $db_name = DB_NAME;        // Datenbank Namen
@@ -34,7 +33,6 @@ include_once('config/configure.php');
         echo "<br><br>";
 
         echo "Datenbank-Server: $db_host<br><br>";
-        echo "Datenbank-Socket: $db_sock<br><br>";
         echo "Datenbank-Benutzer: $db_user<br><br>";
         echo "Path: $path<br><br>";
         echo "Filename: $file_name<br><br>";
@@ -42,7 +40,7 @@ include_once('config/configure.php');
 
         $exitCode = NULL;
 
-        if (define(DB_SOCKET)) {
+        if (defined("DB_SOCKET")) {
             $errorMessage = system(sprintf(
                             'mysqldump --opt -S%s -h%s -u%s -p"%s" %s | gzip  > %s/%s', DB_SOCKET, $db_host, $db_user, $db_pass, $db_name, $path, $file_name
                     ), $exitCode

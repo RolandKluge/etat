@@ -168,13 +168,19 @@ h2 {
     float: left;
 }
 
-#monthlyBalance #text, 
+#monthlyBalance img,
+#monthlyBalance form,
 #newEntry #text {
     vertical-align: middle;
     text-decoration: none;
     height: 48px;
     line-height: 48px;
     float: left;
+}
+
+#monthlyBalance form {
+    display: inline-block;
+    padding-bottom: 5px;
 }
 
 #entriesList {

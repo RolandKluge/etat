@@ -5,13 +5,32 @@
         <div id="text">Eintrag hinzufügen...</div>
     </div>
 </a>
-<img src="static/images/sigma_upper.png" width="48" height="48"/>
-<form method="get" action="./monthlyBalance.php">
-    <input type="submit" value="Monatsstatistik"></input>
-    <select name="month"><option value="1">Januar</option></select>
-    <select name="year"><option value="2014">2014</option></select>
-    <input name="book" type="hidden" value="{$book->getId()}"/>
-</form>
+<div id="monthlyBalance">
+    <img src="static/images/sigma_upper.png" width="48" height="48"/>
+    <form method="get" action="./monthlyBalance.php">
+        <select name="month">
+            <option value="1">Januar</option>
+            <option value="2">Februar</option>
+            <option value="3">März</option>
+            <option value="4">April</option>
+            <option value="5">Mai</option>
+            <option value="6">Juni</option>
+            <option value="7">Juli</option>
+            <option value="8">August</option>
+            <option value="9">September</option>
+            <option value="10">Oktober</option>
+            <option value="11">November</option>
+            <option value="12">Dezember</option>
+        </select>
+        <select name="year">
+            {foreach $years as $year}
+                <option value="{$year}">{$year}</option>
+            {/foreach}
+        </select>
+        <input name="book" type="hidden" value="{$book->getId()}"/>
+        <input type="submit" value="Monatsstatistik"></input>
+    </form>
+</div>
 <br style="clear:both"/>
 Einträge: {$entryCount} - Zeige: {$limitFrom} bis {$limitTo}
 <table id="entriesList">

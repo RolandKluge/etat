@@ -31,7 +31,7 @@ final class BookDao {
             return $book;
         }
     }
-    
+
     public function save(Book $book) {
         if ($book->getId()) {
             $this->update($book);
@@ -65,7 +65,6 @@ final class BookDao {
         $statement->bindParam(":user_id", $user->getId(), PDO::PARAM_INT);
         $statement->bindParam(":book_id", $book->getId(), PDO::PARAM_INT);
         $statement->execute();
-
     }
 
     public function drop($id) {
@@ -113,6 +112,16 @@ final class BookDao {
             }
         }
         return $users;
+    }
+
+    public function getDefaultUser(Book $book) {
+        foreach ($this->getUsers($book) as $user) {
+            if (!$user->isReal()) {
+                return $user;
+            }
+        }
+        //TODO rkluge: exception?
+        return null;
     }
 
     public function getUsers(Book $book) {

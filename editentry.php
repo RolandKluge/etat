@@ -48,7 +48,9 @@ switch ($action) {
 
         $smarty = new Smarty();
 
+        markNoErrors($smarty);
         assignTitle('Eintrag anlegen', $smarty);
+        configureLinks($smarty, $book);
 
         $smarty->assign('currentAction', $action);
         $smarty->assign('submitAction', SAVE_ACTION);
@@ -63,7 +65,6 @@ switch ($action) {
         $smarty->assign('user', NULL);
         $smarty->assign('users', $bookDao->getUsers($book));
 
-        configureLinks($smarty, $book);
 
         $smarty->display(getTemplate());
 
@@ -72,16 +73,19 @@ switch ($action) {
         $id = get_param('entry');
         $entry = $entryDao->get($id);
         
-        if ($id == NULL)
+        if ($entry == NULL)
         {
             showError("Cannot find an entry with ID " . $id, getTemplate());
+            return;
         }
         
         $book = $entry->getBook();
 
         $smarty = new Smarty();
 
+        markNoErrors($smarty);
         assignTitle('Eintrag ' . $entry->getId() . ' bearbeiten', $smarty);
+        configureLinks($smarty, $book);
         
         $smarty->assign('currentAction', $action);
         $smarty->assign('submitAction', SAVE_ACTION);
@@ -96,7 +100,6 @@ switch ($action) {
         $smarty->assign('user', $entry->getUser());
         $smarty->assign('users', $bookDao->getUsers($book));
 
-        configureLinks($smarty, $book);
 
         $smarty->display(getTemplate());
 
