@@ -6,6 +6,10 @@ function getTemplate() {
     return "viewbook.tpl";
 }
 
+function getLinks() {
+    return array(array('url' => './index.php', 'label' => LABEL_HOME));
+}
+
 $defaultVisibleEntryCount = 10;
 
 $bookId = get_param("book");
@@ -40,7 +44,7 @@ if ($limitFrom > $limitTo) {
 }
 
 assignTitle("Einträge in " . $book->getName(), $smarty);
-assignLinks(array(array('url' => './index.php', 'label' => LABEL_HOME)), $smarty);
+assignLinks(getLinks(), $smarty);
 
 $smarty->assign("hasErrors", false);
 $smarty->assign("book", $book);

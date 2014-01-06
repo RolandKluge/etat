@@ -37,7 +37,8 @@ final class BookEntryDao {
     }
 
     public function getAllEntriesInBook(Book $book) {
-        return $this->getEntries($book, 0, $this->getEntryCount($book));
+        $entryCount = $this->getEntryCount($book);
+        return $this->getEntries($book, 0, $entryCount);
     }
 
     public function getEntries(Book $book, $limitFrom, $limitTo) {
@@ -50,7 +51,7 @@ final class BookEntryDao {
         $stmt = Database::getDatabase()->prepare($sql);
         $stmt->bindValue(":limit_from", $limitFrom, PDO::PARAM_INT);
         $stmt->bindValue(":limit_to", $limitTo, PDO::PARAM_INT);
-        $stmt->bindParam(":book_id", $book->getId());
+        $stmt->bindValue(":book_id", $book->getId(), PDO::PARAM_INT);
         $stmt->execute();
 
         $result = array();
@@ -110,7 +111,7 @@ final class BookEntryDao {
                 . " ORDER BY date DESC "
                 . " LIMIT 0, :limit_to";
         $stmt = Database::getDatabase()->prepare($sql);
-        $stmt->bindParam(":book_id", $book->getId(), PDO::PARAM_INT);
+        $stmt->bindValue(":book_id", $book->getId(), PDO::PARAM_INT);
         $stmt->bindValue(":limit_to", $limit, PDO::PARAM_INT);
         $stmt->execute();
 

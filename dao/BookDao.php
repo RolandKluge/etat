@@ -44,8 +44,8 @@ final class BookDao {
     private function create(Book $book) {
         $sql = "INSERT INTO books (name, description) VALUES (:name, :description)";
         $statement = Database::getDatabase()->prepare($sql);
-        $statement->bindParam(":name", $book->getName());
-        $statement->bindParam(":description", $book->getDescription());
+        $statement->bindValue(":name", $book->getName());
+        $statement->bindValue(":description", $book->getDescription());
         $statement->execute();
         $book->setId(Database::getDatabase()->lastInsertId());
     }
@@ -53,17 +53,17 @@ final class BookDao {
     private function update(Book $book) {
         $sql = "UPDATE books SET name = :name, description = :description WHERE id = :id";
         $statement = Database::getDatabase()->prepare($sql);
-        $statement->bindParam(":id", $book->getId());
-        $statement->bindParam(":name", $book->getName());
-        $statement->bindParam(":description", $book->getDescription());
+        $statement->bindValue(":id", $book->getId());
+        $statement->bindValue(":name", $book->getName());
+        $statement->bindValue(":description", $book->getDescription());
         $statement->execute();
     }
 
     public function addUser(Book $book, User $user) {
         $sql = "INSERT INTO users_to_books (user_id, book_id) VALUES (:user_id, :book_id)";
         $statement = Database::getDatabase()->prepare($sql);
-        $statement->bindParam(":user_id", $user->getId(), PDO::PARAM_INT);
-        $statement->bindParam(":book_id", $book->getId(), PDO::PARAM_INT);
+        $statement->bindValue(":user_id", $user->getId(), PDO::PARAM_INT);
+        $statement->bindValue(":book_id", $book->getId(), PDO::PARAM_INT);
         $statement->execute();
     }
 
@@ -96,7 +96,7 @@ final class BookDao {
     private function dropDefaultUser(Book $book) {
         $sql = "SELECT * FROM users_to_books JOIN users ON users_to_books.user_id = users.id WHERE book_id = :book_id AND NOT is_real";
         $statement = Database::getDatabase()->prepare($sql);
-        $statement->bindParam(":book_id", $book->getId());
+        $statement->bindValue(":book_id", $book->getId(), PDO::PARAM_INT);
         $statement->execute();
         $row = $statement->fetch(PDO::FETCH_ASSOC);
 
@@ -127,7 +127,7 @@ final class BookDao {
     public function getUsers(Book $book) {
         $sql = "SELECT * FROM users_to_books JOIN users ON users_to_books.user_id = users.id WHERE book_id = :book_id";
         $stmt = Database::getDatabase()->prepare($sql);
-        $stmt->bindParam(":book_id", $book->getId());
+        $stmt->bindValue(":book_id", $book->getId(), PDO::PARAM_INT);
         $stmt->execute();
 
         $users = array();
@@ -165,8 +165,8 @@ final class BookDao {
     public function removeUser(Book $book, User $user) {
         $sql = "DELETE FROM users_to_books WHERE book_id = :book_id AND user_id = :user_id";
         $stmt = Database::getDatabase()->prepare($sql);
-        $stmt->bindParam(":book_id", $book->getId());
-        $stmt->bindParam(":user_id", $user->getId());
+        $stmt->bindValue(":book_id", $book->getId(), PDO::PARAM_INT);
+        $stmt->bindValue(":user_id", $user->getId(), PDO::PARAM_INT);
         $stmt->execute();
     }
 
