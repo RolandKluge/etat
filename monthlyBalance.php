@@ -1,6 +1,7 @@
 <?php
 
 include_once('view/common.php');
+include_once('model/time.php');
 
 function getTemplate() {
     return 'monthlyBalance.tpl';
@@ -47,9 +48,8 @@ if (!preg_match('/^\d\d\d\d$/', $year)) {
 }
 
 $month = (int) $month;
+$monthStr = TimeUtils::getMonth($month);
 $year = (int) $year;
-
-# TODO rkluge: validate month and year
 
 $entries = $entryDao->getEntriesByMonth($book, $month, $year);
 $amountSum = BookEntry::getAmountSum($entries);
@@ -61,13 +61,16 @@ $averageExpensesPerRealUser = ($amountSum - $userToAmount[$defaultUser->getId()]
 
 $smarty = new Smarty();
 
-assignTitle("Monatsstatistik von " . $book->getName() . sprintf(" %02d.%2d", $month, $year)
+assignTitle("Monatsstatistik von " . $book->getName() . " für $monthStr $year"
         , $smarty);
 
 configureLinks($smarty, $book);
 $smarty->assign('hasErrors', false);
 $smarty->assign('book', $book);
+$smarty->assign('month', $monthStr);
+$smarty->assign('year', $year);
 $smarty->assign('entryCount', count($entries));
+$smarty->assign('entries', $entries);
 $smarty->assign('amountSum', $amountSum);
 $smarty->assign('averageExpensesPerRealUser', $averageExpensesPerRealUser);
 $smarty->assign('users', $users);

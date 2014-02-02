@@ -7,23 +7,7 @@
  * =============================================================================
  */
 
-@media screen and (max-device-width: 480px) {
-    * {
-        font-family: sans-serif;
-        font-size: 24px;
-    }
 
-    /* Hide date picker as it is not optimized for mobile devices */
-    .ui-datepicker-trigger {
-        display: none !important;
-    }
-
-}
-
-* {
-    font-family: sans-serif;
-    font-size: 16px;
-}
 
 h2 {
     clear:both;
@@ -31,11 +15,15 @@ h2 {
 
 #content {
     width: 100%;
+    font-family: sans-serif;
+    font-size: 16px;
+    font-weight: normal;
 }
 
 #footer {
     margin-top: 10px;
     height: 30px;
+    line-height: 30px;
     clear: both;
 }
 
@@ -47,8 +35,8 @@ h2 {
     color: white;
 }
 
-
 #header {
+    clear: both;
     height: 40px;
     width: 100%;
     font-weight: bold;
@@ -60,43 +48,57 @@ h2 {
     height: 30px;
     line-height: 30px;
     vertical-align: middle;
-    border: white solid 2px;
     padding-left: 5px;
     padding-right: 5px;
     margin-left: 5px;
     margin-top: 3px;
 }
 
-#header #links {
-    margin-top: 5px;
-    float: right;
+#links {
+    margin-bottom: 5px;
+    float: left;
 }
 
-#header ul {
+#links ul {
     list-style: none;
 }
 
-#header li {
-    list-style: none;
-    /*display: inline-block;*/
-}
-
-#header .link+.link {
-    border-left: white solid 1px;
-    padding-left: 5px;
-}
-
-#header .link {
+#links .link {
     height: 30px;
     line-height: 30px;
     vertical-align: middle;
-    padding-right: 5px;
+    margin-right: 5px;
+    margin-left: 5px;
+    padding-left: 2px;
+    padding-right: 2px;
     display: inline-block;
+    float: left;
+    border: #AAAAAA solid 1px;
+    border-radius: 5px;
+}
+
+#links .linkSeparator {
+    border-left: black solid 1px;
     float: left;
 }
 
 .errorMessage {
     color: red;
+}
+
+.btn {
+    border-radius: 5px;
+    font-weight: bold;
+    color: white;
+    padding: 5px;
+}
+
+.btnSuccess {
+    background: #254117;
+}
+
+.btnDanger {
+    background: #800517;
 }
 
 /* =============================================================================
@@ -263,4 +265,16 @@ form * {
     clear: both;
     float: left;
     margin-left: 160px;
+}
+
+@media screen and (max-device-width: 480px) {
+    #content {
+        font-size: 24px;
+    }
+
+    /* Hide date picker as it is not optimized for mobile devices */
+    .ui-datepicker-trigger {
+        display: none !important;
+    }
+
 }

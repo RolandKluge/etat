@@ -6,7 +6,7 @@
     <br/>
     <input name='user' type="hidden" value="{$id}"></input>
     <input name="action" type="hidden" value="{$submitAction}"></input>
-    <button id="save" type="submit">Speichern</button>
+    <button class="btn btnSuccess" id="save" type="submit">Speichern</button>
 </form>
 
 {if $currentAction === 'edit'}
@@ -16,7 +16,7 @@
               onsubmit="return confirm('Soll dieser Benutzer wirklich gelöscht werden?');">
             <input name='action' type='hidden' value='drop'/>
             <input name='user' type='hidden' value='{$id}'/>
-            <input type='submit' value='Benutzer löschen'/>
+            <input class="btn btnDanger" type='submit' value='Benutzer löschen'/>
         </form>
     </div>
 {/if}

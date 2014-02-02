@@ -5,7 +5,7 @@
 function validateAmount() {
     var value = document.forms['editEntryForm']['amount'].value;
 
-    if (!value.match('^\\d+(\.\\d\\d?)?$'))
+    if (!value.match('^[\\-]?\\d+(\.\\d\\d?)?$'))
     {
         $('#amountNote').text('Der Betrag muss eine Dezimalzahl sein!');
         return false;

@@ -9,22 +9,21 @@
     <img src="static/images/sigma_upper.png" width="48" height="48"/>
     <form method="get" action="./monthlyBalance.php">
         <select name="month">
-            <option value="1">Januar</option>
-            <option value="2">Februar</option>
-            <option value="3">März</option>
-            <option value="4">April</option>
-            <option value="5">Mai</option>
-            <option value="6">Juni</option>
-            <option value="7">Juli</option>
-            <option value="8">August</option>
-            <option value="9">September</option>
-            <option value="10">Oktober</option>
-            <option value="11">November</option>
-            <option value="12">Dezember</option>
+            {foreach from=$months key=monthId item=month}
+                <option value="{$monthId}"
+                        {if $monthId == $suggestedMonth}
+                            selected
+                        {/if}
+                        >{$month}</option>
+            {/foreach}
         </select>
         <select name="year">
             {foreach $years as $year}
-                <option value="{$year}">{$year}</option>
+                <option value="{$year}"
+                        {if $year == $suggestedYear}
+                            selected
+                        {/if}
+                        >{$year}</option>
             {/foreach}
         </select>
         <input name="book" type="hidden" value="{$book->getId()}"/>
@@ -32,7 +31,7 @@
     </form>
 </div>
 <br style="clear:both"/>
-Einträge: {$entryCount} - Zeige: {$limitFrom} bis {$limitTo}
+{$entryCount} Einträge - Zeige: {$limitFrom} bis {$limitTo}
 <table id="entriesList">
     <col width='15%'>
     <col width='15%'>
@@ -61,12 +60,12 @@ Einträge: {$entryCount} - Zeige: {$limitFrom} bis {$limitTo}
 {if $limitFrom > 1}
     {$prevLimitFrom = max($limitFrom - $visibleEntryCount, 1)}
     {$prevLimitTo = $limitFrom - 1}
-    {$prevEntryCount = $prevLimitTo - $prevLimitFrom}
+    {$prevEntryCount = $prevLimitTo - $prevLimitFrom + 1}
     <a href="./viewbook.php?book={$book->getId()}&limitFrom={$prevLimitFrom}&limitTo={$prevLimitTo}">Zeige vorige {$prevEntryCount} Einträge</a>
 {/if}
 {if $limitTo < $entryCount}
     {$nextLimitFrom = $limitTo + 1}
-    {$nextLimitTo = min($limitTo + $visibleEntryCount, $entryCount)}
+    {$nextLimitTo = min($nextLimitFrom + $visibleEntryCount - 1, $entryCount)}
     {$nextEntryCount = $nextLimitTo - $nextLimitFrom + 1}
     <a href="./viewbook.php?book={$book->getId()}&limitFrom={$nextLimitFrom}&limitTo={$nextLimitTo}">Zeige nächste {$nextEntryCount} Einträge</a>
 {/if}

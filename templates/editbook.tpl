@@ -21,18 +21,18 @@
     <br/>
     <input name="book" type="hidden" value="{$id}"></input>
     <input name="action" type="hidden" value="{$submitAction}"></input>
-    <button id="save" type="submit">Speichern</button>
+    <button class="btn btnSuccess" id="save" type="submit">Speichern</button>
 </form>
-    
-    
+
+
 {if $currentAction === 'edit'}
-<h2>Buch löschen</h2>
+    <h2>Buch löschen</h2>
     <div class='drop'>
         <form id='dropBookForm' method="get" action="editbook.php"
               onsubmit="return confirm('Soll dieses Buch wirklich gelöscht werden?');">
             <input name='action' type='hidden' value='drop'/>
             <input name='book' type='hidden' value='{$id}'/>
-            <input type='submit' value='Buch löschen'/>
+            <input class="btn btnDanger" type='submit' value='Buch löschen'/>
         </form>
     </div>
 {/if}

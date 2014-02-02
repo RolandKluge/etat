@@ -1,7 +1,6 @@
 {include file='header.tpl'}
 
 <script src="static/js/editentry.js"></script>
-
 <h2>Daten des Eintrags eingeben</h2>
 <form id="editEntryForm" method="get" action="editentry.php">
     <label for="bookName">Buch:</label>
@@ -40,7 +39,7 @@
     <input name="entry" type="hidden" value="{$id}"></input>
     <input name="book" type="hidden" value="{$book->getId()}"></input>
     <input name="action" type="hidden" value="{$submitAction}"></input>
-    <button id="save" id="submit" type="submit">Speichern</button>
+    <button id="save" class="btnSuccess btn" id="submit" type="submit">Speichern</button>
 </form>
 
 {if $currentAction === 'edit'}
@@ -50,7 +49,7 @@
               onsubmit="return confirm('Soll dieser Eintrag wirklich gelöscht werden?');">
             <input name='action' type='hidden' value='drop'/>
             <input name='entry' type='hidden' value='{$id}'/>
-            <input type='submit' value='Eintrag löschen'/>
+            <input class="btnDanger btn" type='submit' value='Eintrag löschen'/>
         </form>
     </div>
 {/if}

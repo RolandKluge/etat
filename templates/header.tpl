@@ -11,25 +11,23 @@
     </head>
     <body>
         <div id="content">
+            <div id="links">
+                {foreach $links as $link}
+                    <div class="linkSeparator"></div>
+                    <div class="link">
+                        <a href="{$link['url']}">
+                            {$link['label']}
+                        </a>
+                    </div>
+                {/foreach}
+            </div>
             <div id="header">
                 <div id="title">
                     {$title}
                 </div>
-                <div id="links">
-                    {if $links}
-                        <div class="link">Gehe: </div>
-                        <div style="float: left;"><!--Dummy--></div>
-                    {/if}
-                    {foreach $links as $link}
-                        <div class="link">
-                            <a href="{$link['url']}">
-                                {$link['label']}
-                            </a>
-                        </div>
-                    {/foreach}
-                </div>
+
             </div>
             {if {$hasErrors}}
                 <div class="errorMessage">{$errorMessage}</div>
                 <div style="display: none">
-            {/if}
+                {/if}

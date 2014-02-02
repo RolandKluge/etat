@@ -38,22 +38,24 @@ final class BookEntryDao {
 
     public function getAllEntriesInBook(Book $book) {
         $entryCount = $this->getEntryCount($book);
-        return $this->getEntries($book, 0, $entryCount);
+        return $this->getEntries($book, 1, $entryCount);
     }
 
-    public function getEntries(Book $book, $limitFrom, $limitTo) {
+    public function getEntries(Book $book, $firstEntry, $lastEntry) {
         $bookEntryMapper = new BookEntryMapper();
         $userDao = new UserDao();
 
+        $count = $lastEntry - $firstEntry + 1;
+        
         $sql = "SELECT * FROM entries WHERE book_id = :book_id "
                 . " ORDER BY date DESC "
-                . " LIMIT :limit_from, :limit_to";
+                . " LIMIT :limit_from, :count";
         $stmt = Database::getDatabase()->prepare($sql);
-        $stmt->bindValue(":limit_from", $limitFrom, PDO::PARAM_INT);
-        $stmt->bindValue(":limit_to", $limitTo, PDO::PARAM_INT);
+        $stmt->bindValue(":limit_from", $firstEntry - 1, PDO::PARAM_INT);
+        $stmt->bindValue(":count", $count, PDO::PARAM_INT);
         $stmt->bindValue(":book_id", $book->getId(), PDO::PARAM_INT);
         $stmt->execute();
-
+        
         $result = array();
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
             $user = $userDao->get($row['user_id']);
@@ -97,7 +99,7 @@ final class BookEntryDao {
     public function getEntryYears(Book $book) {
         $result = array();
         foreach ($this->getAllEntriesInBook($book) as $entry) {
-            $year = $entry->getDate()->format('Y');
+            $year = (int)$entry->getDate()->format('Y');
             if (!in_array($year, $result)) {
                 array_push($result, $year);
             }
@@ -138,11 +140,11 @@ final class BookEntryDao {
         $sql = 'INSERT INTO entries (amount, date, description, book_id, user_id)' .
                 ' VALUES (:amount, :date, :description, :book_id, :user_id)';
         $stmt = Database::getDatabase()->prepare($sql);
-        $stmt->bindParam(":amount", $entry->getAmount());
-        $stmt->bindParam(":date", BookEntryDao::formatDateTime($entry->getDate()));
-        $stmt->bindParam(":description", $entry->getDescription());
-        $stmt->bindParam(":book_id", $entry->getBook()->getId());
-        $stmt->bindParam(":user_id", $entry->getUser()->getId());
+        $stmt->bindValue(":amount", $entry->getAmount());
+        $stmt->bindValue(":date", BookEntryDao::formatDateTime($entry->getDate()));
+        $stmt->bindValue(":description", $entry->getDescription());
+        $stmt->bindValue(":book_id", $entry->getBook()->getId());
+        $stmt->bindValue(":user_id", $entry->getUser()->getId());
         $stmt->execute();
     }
 
@@ -151,12 +153,12 @@ final class BookEntryDao {
                 . 'book_id = :book_id, user_id = :user_id '
                 . 'WHERE id = :id';
         $stmt = Database::getDatabase()->prepare($sql);
-        $stmt->bindParam(":id", $entry->getId());
-        $stmt->bindParam(":amount", $entry->getAmount());
-        $stmt->bindParam(":date", BookEntryDao::formatDateTime($entry->getDate()));
-        $stmt->bindParam(":description", $entry->getDescription());
-        $stmt->bindParam(":book_id", $entry->getBook()->getId());
-        $stmt->bindParam(":user_id", $entry->getUser()->getId());
+        $stmt->bindValue(":id", $entry->getId());
+        $stmt->bindValue(":amount", $entry->getAmount());
+        $stmt->bindValue(":date", BookEntryDao::formatDateTime($entry->getDate()));
+        $stmt->bindValue(":description", $entry->getDescription());
+        $stmt->bindValue(":book_id", $entry->getBook()->getId());
+        $stmt->bindValue(":user_id", $entry->getUser()->getId());
         $stmt->execute();
     }
 

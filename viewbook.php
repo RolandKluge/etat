@@ -1,6 +1,7 @@
 <?php
 
 include_once('view/common.php');
+include_once('model/time.php');
 
 function getTemplate() {
     return "viewbook.tpl";
@@ -9,6 +10,7 @@ function getTemplate() {
 function getLinks() {
     return array(array('url' => './index.php', 'label' => LABEL_HOME));
 }
+
 
 $defaultVisibleEntryCount = 10;
 
@@ -27,31 +29,45 @@ if ($book == NULL) {
 
 $entryCount = $entryDao->getEntryCount($book);
 
+$visibleEntryCount = $defaultVisibleEntryCount;
+
 if (has_get_param('limitFrom')) {
-    $limitFrom = max(0, (int) get_param('limitFrom') - 1);
+    $firstEntry = max(1, (int) get_param('limitFrom'));
 } else {
-    $limitFrom = 0;
+    $firstEntry = 1;
 }
 
 if (has_get_param('limitTo')) {
-    $limitTo = min($entryCount, (int) get_param('limitTo')) - 1;
+    $lastEntry = min($entryCount, (int) get_param('limitTo'));
 } else {
-    $limitTo = min($entryCount, $limitFrom + $defaultVisibleEntryCount) - 1;
+    $lastEntry = min($entryCount, $firstEntry + $visibleEntryCount - 1);
 }
 
-if ($limitFrom > $limitTo) {
-    $limitFrom = $limitTo;
+if ($firstEntry > $lastEntry) {
+    $firstEntry = $lastEntry;
 }
+
+$entries = $entryDao->getEntries($book, $firstEntry, $lastEntry);
+
+$months = TimeUtils::getMonths();
+
+$suggestedMonth = TimeUtils::getPreviousMonthId();
+$suggestedYear = TimeUtils::getCurrentYear();
 
 assignTitle("Einträge in " . $book->getName(), $smarty);
 assignLinks(getLinks(), $smarty);
 
-$smarty->assign("hasErrors", false);
-$smarty->assign("book", $book);
-$smarty->assign("entries", $entryDao->getEntries($book, $limitFrom, $limitTo + 1));
+$smarty->assign('hasErrors', false);
+$smarty->assign('book', $book);
+$smarty->assign('entries', $entries);
 $smarty->assign('entryCount', $entryCount);
-$smarty->assign('limitFrom', $limitFrom + 1);
-$smarty->assign('limitTo', $limitTo + 1);
+$smarty->assign('limitFrom', $firstEntry);
+$smarty->assign('limitTo', $lastEntry);
+
+$smarty->assign('months', $months);
+$smarty->assign('suggestedMonth', $suggestedMonth);
+$smarty->assign('suggestedYear', $suggestedYear);
+
 $smarty->assign('years', $entryDao->getEntryYears($book));
 $smarty->assign('visibleEntryCount', $defaultVisibleEntryCount);
 $smarty->display(getTemplate());
