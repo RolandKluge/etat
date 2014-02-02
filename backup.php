@@ -21,6 +21,7 @@ include_once('config/configure.php');
         $db_user = DB_USER;        // Datenbank Benutzern Name
         $db_pass = DB_PASSWORD;    // Datenbank Passwort
         $db_name = DB_NAME;        // Datenbank Namen
+		$db_default_charset = DB_DEFAULT_CHARSET;
         $date = date("ymd") . "-" . date("His");        // Erzeugung des Datum/Uhrzeit-Strings
         $file_name = $db_name . "_" . $date . ".sql.gz";  // Erzeugung des Namens für das Backupfile
         $path = FS_ROOT . "/backups/";   // absoluten Pfad zur Datei ermitteln
@@ -34,6 +35,7 @@ include_once('config/configure.php');
 
         echo "Datenbank-Server: $db_host<br><br>";
         echo "Datenbank-Benutzer: $db_user<br><br>";
+		echo "Default character set: $db_default_charset<br/><br/>";
         echo "Path: $path<br><br>";
         echo "Filename: $file_name<br><br>";
         echo "Starte Backup<br><br>";
@@ -41,15 +43,16 @@ include_once('config/configure.php');
         $exitCode = NULL;
 
         if (defined("DB_SOCKET")) {
-            $errorMessage = system(sprintf(
-                            'mysqldump --opt -S%s -h%s -u%s -p"%s" %s | gzip  > %s/%s', DB_SOCKET, $db_host, $db_user, $db_pass, $db_name, $path, $file_name
-                    ), $exitCode
-            );
+            $command = sprintf(
+                            'mysqldump --opt -S%s -h%s -u%s -p"%s" --default-character-set %s %s | gzip  > %s/%s', DB_SOCKET, $db_host, $db_user, $db_pass, $db_default_charset, $db_name, $path, $file_name
+                    );
         } else {
-            $errorMessage = system(sprintf(
-                            'mysqldump --opt -h%s -u%s -p"%s" %s | gzip  > %s/%s', $db_host, $db_user, $db_pass, $db_name, $path, $file_name
-                    ), $exitCode);
+            $command = sprintf(
+            'mysqldump --opt -h%s -u%s -p"%s" --default-character-set %s %s | gzip  > %s/%s', $db_host, $db_user, $db_pass, $db_default_charset, $db_name, $path, $file_name);
         }
+        
+        #echo "Command: $command<br/><br/>";
+        $errorMessage = system($command, $exitCode);
 
         if ($exitCode != 0) {
             $css = 'color: red;';
