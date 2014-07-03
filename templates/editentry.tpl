@@ -13,6 +13,8 @@
 
     <label for="date">Datum:</label>
     <input id="date" name="date" type="text" size="10" value='{$date}'/>
+    <input id="prevDay" type="button" value="-"/>
+    <input id="nextDay" type="button" value="+"/>
     <span id="dateNote" class="errorMessage"></span>
 
     <label for="description">Beschreibung</label>
