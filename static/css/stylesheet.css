@@ -94,11 +94,11 @@ h2 {
 }
 
 .btnSuccess {
-    background: #254117;
+    background: #00A600;
 }
 
 .btnDanger {
-    background: #800517;
+    background: #900C0B;
 }
 
 /* =============================================================================
@@ -246,6 +246,10 @@ form * {
     margin-left: 5px;
 }
 
+#editEntryForm #amountNote {
+    font-weight: bold;
+}
+
 #editUserForm input,
 #editBookForm input,
 #editEntryForm input {
@@ -260,11 +264,20 @@ form * {
 
 #editUserForm #save,
 #editBookForm #save, 
-#editEntryForm #save {
+#editEntryForm #saveAndNew, 
+#editEntryForm #save,
+#editEntryForm #abort {
     margin-top: 15px;
     clear: both;
     float: left;
     margin-left: 160px;
+    width: auto;
+}
+
+#editEntryForm #saveAndNew,
+#editEntryForm #abort {
+    clear: none;
+    margin-left: 15px;
 }
 
 @media screen and (max-device-width: 480px) {

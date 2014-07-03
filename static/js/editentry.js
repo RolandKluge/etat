@@ -5,7 +5,7 @@
 function validateAmount() {
     var value = document.forms['editEntryForm']['amount'].value;
 
-    if (!value.match('^[\\-]?\\d+(\.\\d\\d?)?$'))
+    if (!value.match('^\\s*[\\-]?\\d+([\.,]\\d\\d?)?\\s*$'))
     {
         $('#amountNote').text('Der Betrag muss eine Dezimalzahl sein!');
         return false;
@@ -55,6 +55,20 @@ $(document).ready(function() {
     });
     $('.descriptionSuggestion').click(function() {
         $('#description').attr('value', $(this).text());
+    });
+    
+    $('#save').click(function() {
+       $("input[name='afterSaveAction']").val("overview");
+       $(this).closest('form').submit();
+    });
+    
+    $('#saveAndNew').click(function() {
+       $("input[name='afterSaveAction']").val("new");
+       $(this).closest('form').submit();
+    });
+    
+    $('#abort').click(function() {
+       window.location = "viewbook.php?book=" + bookId;
     });
     
 });

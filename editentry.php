@@ -5,15 +5,18 @@
  */
 include_once('view/common.php');
 
-function available_actions() {
+function available_actions()
+{
     return array(EDIT_ACTION, NEW_ACTION, SAVE_ACTION, DROP_ACTION);
 }
 
-function is_valid_action($action) {
+function is_valid_action($action)
+{
     return in_array($action, available_actions());
 }
 
-function configureLinks(Smarty $smarty, Book $book) {
+function configureLinks(Smarty $smarty, Book $book)
+{
 
     $links = array(
         array('url' => './index.php', 'label' => LABEL_HOME),
@@ -22,7 +25,8 @@ function configureLinks(Smarty $smarty, Book $book) {
     assignLinks($links, $smarty);
 }
 
-function getTemplate() {
+function getTemplate()
+{
     return 'editentry.tpl';
 }
 
@@ -30,9 +34,12 @@ function getTemplate() {
  * Main routine 
  */
 
-if (has_get_param('action') && is_valid_action(get_param('action'))) {
+if (has_get_param('action') && is_valid_action(get_param('action')))
+{
     $action = get_param('action');
-} else {
+}
+else
+{
     showError('Unknown action or missing action: ' . get_param('action'), getTemplate());
     return;
 }
@@ -41,7 +48,8 @@ $bookDao = new BookDao();
 $entryDao = new BookEntryDao();
 $userDao = new UserDao();
 
-switch ($action) {
+switch ($action)
+{
     case NEW_ACTION:
         $bookId = get_param('book');
         $book = $bookDao->get($bookId);
@@ -72,13 +80,13 @@ switch ($action) {
     case EDIT_ACTION:
         $id = get_param('entry');
         $entry = $entryDao->get($id);
-        
+
         if ($entry == NULL)
         {
             showError("Cannot find an entry with ID " . $id, getTemplate());
             return;
         }
-        
+
         $book = $entry->getBook();
 
         $smarty = new Smarty();
@@ -86,7 +94,7 @@ switch ($action) {
         markNoErrors($smarty);
         assignTitle('Eintrag ' . $entry->getId() . ' bearbeiten', $smarty);
         configureLinks($smarty, $book);
-        
+
         $smarty->assign('currentAction', $action);
         $smarty->assign('submitAction', SAVE_ACTION);
 
@@ -107,10 +115,12 @@ switch ($action) {
     case SAVE_ACTION:
         $id = get_param('entry');
         $amount = get_param('amount');
+        $amount = str_replace(",", ".", $amount);
         $formattedDate = get_param('date');
         $description = get_param('description');
         $userId = get_param('user');
         $bookId = get_param('book');
+        $afterSaveAction = get_param('afterSaveAction');
 
         // Contains the date in the German format: d.m.y
         $dateComponents = explode('.', $formattedDate);
@@ -130,7 +140,15 @@ switch ($action) {
 
         $entryDao->save($entry);
 
-        header('Location: viewbook.php?book=' . $book->getId(), true, 302);
+        if ($afterSaveAction == 'new')
+        {
+            header('Location: editentry.php?action=' . NEW_ACTION . '&book=' . $book->getId(), true, 302);
+        }
+        else
+        {
+            header('Location: viewbook.php?book=' . $book->getId(), true, 302);
+        }
+
         break;
     case DROP_ACTION:
         $id = get_param('entry');

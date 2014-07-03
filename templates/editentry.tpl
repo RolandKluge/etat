@@ -39,7 +39,15 @@
     <input name="entry" type="hidden" value="{$id}"></input>
     <input name="book" type="hidden" value="{$book->getId()}"></input>
     <input name="action" type="hidden" value="{$submitAction}"></input>
-    <button id="save" class="btnSuccess btn" id="submit" type="submit">Speichern</button>
+    <!--
+    The 'afterSaveAction' should be either 'overview' or 'new'.
+    In case of 'overview' the next visible page should be the overview of the current book,
+    in case of 'new' the next visible page should be an empty new entry.
+    -->
+    <input name="afterSaveAction" type="hidden" value="overview"></input>
+    <input type="button" id="save" class="btnSuccess btn" value="Speichern"/>
+    <input type="button" id="saveAndNew" class="btnSuccess btn" value="Speichern & Neu"/>
+    <input type="button" id="abort" class="btnDanger btn" value="Abbrechen"/>
 </form>
 
 {if $currentAction === 'edit'}
@@ -53,4 +61,8 @@
         </form>
     </div>
 {/if}
+
+<script type="text/javascript">
+    var bookId="{$book->getId()}";
+</script>
 {include file='footer.tpl'}
