@@ -12,7 +12,7 @@ function getLinks() {
 }
 
 
-$defaultVisibleEntryCount = 10;
+$defaultVisibleEntryCount = 50;
 
 $bookId = get_param("book");
 
@@ -48,6 +48,7 @@ if ($firstEntry > $lastEntry) {
 }
 
 $entries = $entryDao->getEntries($book, $firstEntry, $lastEntry);
+
 
 $months = TimeUtils::getMonths();
 
