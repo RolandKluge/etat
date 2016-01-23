@@ -19,7 +19,7 @@ function validateAmount() {
 function validateDate() {
     var value = document.forms['editEntryForm']['date'].value;
 
-    if (!value.match('^\\d\\d\.\\d\\d.\\d\\d\\d\\d$'))
+    if (!value.match('^\\d?\\d\.\\d?\\d.\\d\\d\\d\\d$'))
     {
         $('#dateNote').text('Das Datum in folgendem Format eingeben: 01.04.2013');
         return false;
