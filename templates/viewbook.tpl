@@ -29,6 +29,19 @@
         <input name="book" type="hidden" value="{$book->getId()}"/>
         <input type="submit" value="Monatsstatistik"></input>
     </form>
+    <form method="get" action="./yearlyBalance.php">
+        <select name="year">
+            {foreach $years as $year}
+                <option value="{$year}"
+                        {if $year == $suggestedYear}
+                            selected
+                        {/if}
+                        >{$year}</option>
+            {/foreach}
+        </select>
+        <input name="book" type="hidden" value="{$book->getId()}"/>
+        <input type="submit" value="Jahresstatistik"></input>
+    </form>
 </div>
 <br style="clear:both"/>
 {$entryCount} Einträge - Zeige: {$limitFrom} bis {$limitTo}

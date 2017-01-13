@@ -46,7 +46,7 @@ final class BookEntryDao {
         $userDao = new UserDao();
 
         $count = $lastEntry - $firstEntry + 1;
-        
+
         $sql = "SELECT * FROM entries WHERE book_id = :book_id "
                 . " ORDER BY date DESC "
                 . " LIMIT :limit_from, :count";
@@ -55,7 +55,7 @@ final class BookEntryDao {
         $stmt->bindValue(":count", $count, PDO::PARAM_INT);
         $stmt->bindValue(":book_id", $book->getId(), PDO::PARAM_INT);
         $stmt->execute();
-        
+
         $result = array();
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
             $user = $userDao->get($row['user_id']);
@@ -80,6 +80,18 @@ final class BookEntryDao {
         return $result;
     }
 
+    public function getEntriesByYear(Book $book, $year) {
+        $result = array();
+        foreach ($this->getAllEntriesInBook($book) as $entry) {
+            $date = $entry->getDate();
+            $entryYear = (int) $date->format('Y');
+            if ($year == $entryYear) {
+                array_push($result, $entry);
+            }
+        }
+        return $result;
+    }
+
     public function getUserToExpensesByMonth(Book $book, $month, $year) {
         $bookDao = new BookDao();
         $expenses = array();
@@ -96,10 +108,26 @@ final class BookEntryDao {
         return $expenses;
     }
 
+    public function getUserToExpensesByYear(Book $book, $year) {
+        $bookDao = new BookDao();
+        $expenses = array();
+        foreach ($bookDao->getUsers($book) as $user) {
+            $expenses[$user->getID()] = 0.0;
+        }
+
+        foreach ($this->getEntriesByYear($book, $year) as $entry) {
+            $userId = $entry->getUser()->getId();
+            $amount = $entry->getAmount();
+            $expenses[$userId] += $amount;
+        }
+
+        return $expenses;
+    }
+    
     public function getEntryYears(Book $book) {
         $result = array();
         foreach ($this->getAllEntriesInBook($book) as $entry) {
-            $year = (int)$entry->getDate()->format('Y');
+            $year = (int) $entry->getDate()->format('Y');
             if (!in_array($year, $result)) {
                 array_push($result, $year);
             }
