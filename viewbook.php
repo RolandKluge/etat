@@ -49,6 +49,7 @@ if ($firstEntry > $lastEntry) {
 
 $entries = $entryDao->getEntries($book, $firstEntry, $lastEntry);
 
+
 $months = TimeUtils::getMonths();
 
 $suggestedMonth = TimeUtils::getPreviousMonthId();

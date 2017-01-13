@@ -35,3 +35,9 @@ AddHandler x-mapp-php5 .php
         -> If necessary: 
 DirectoryIndex: index.php
 
+Feature requests
+===
+ - Web UI should accept shorter dates (e.g., 15.12. instead of 15.12.2015)
+ - When loading viewbook.php, the first field should be selected
+ - It should be possible to delete the 'Gemeinsames' user and to omit such a user when creating a book (if desired)
+
