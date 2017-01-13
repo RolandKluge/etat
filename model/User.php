@@ -10,6 +10,7 @@ final class User {
     private $id;
     private $name;
     private $isReal;
+    private $isDeleted;
 
     public function getId() {
         return $this->id;
@@ -36,4 +37,11 @@ final class User {
         $this->isReal = $isReal;
     }
     
+    public function isDeleted() {
+        return $this->isDeleted;
+    }
+    
+    public function setIsDeleted($isDeleted) {
+        $this->isDeleted = $isDeleted;
+    }
 }

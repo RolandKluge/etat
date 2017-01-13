@@ -134,7 +134,10 @@ final class BookDao {
         $userDao = new UserDao();
         foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
             $user = $userDao->get($row['user_id']);
-            array_push($users, $user);
+            if (!$user->isDeleted())
+            {
+                array_push($users, $user);
+            }
         }
         return $users;
     }

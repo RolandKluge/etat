@@ -20,6 +20,7 @@
     <label for="description">Beschreibung</label>
     <input id='description' name="description" type="text" size="50" value='{$description}'/>
 
+    <!--
     <label>Vorschläge:</label>
     <div class='descriptionSuggestions'>
         {foreach $descriptionSuggestions as $suggestion}
@@ -28,6 +29,7 @@
             <div id='noSuggestions'>Keine Vorschläge</div>
         {/foreach}
     </div>
+    -->
 
     <label for="user">Benutzer:</label>
     <select name="user" >

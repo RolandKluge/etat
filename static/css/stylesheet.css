@@ -247,7 +247,9 @@ form * {
     margin-left: 5px;
 }
 
+#editEntryForm #dateNote,
 #editEntryForm #amountNote {
+    clear:both;
     font-weight: bold;
 }
 

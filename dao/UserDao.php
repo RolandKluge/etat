@@ -11,7 +11,7 @@ include_once('dao/Database.php');
 final class UserDao {
 
     public function getAll() {
-        $sql = "SELECT * FROM users";
+        $sql = "SELECT * FROM users WHERE is_deleted = 0";
         $users = array();
         foreach (Database::createStatement($sql) as $row) {
             $user = UserMapper::map($row);
@@ -69,9 +69,11 @@ final class UserDao {
     }
 
     public function drop($id) {
-        $sql = "DELETE FROM users WHERE id = :id";
+        //$sql = "DELETE FROM users WHERE id = :id";
+        $sql = "UPDATE users SET is_deleted = 1 WHERE id = :id";
         $statement = Database::getDatabase()->prepare($sql);
-        $statement->execute(array(":id" => $id));
+        $statement->bindParam(":id", $id);
+        $statement->execute();
     }
 
 }

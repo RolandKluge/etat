@@ -56,8 +56,10 @@ $amountSum = BookEntry::getAmountSum($entries);
 $users = $bookDao->getUsers($book);
 $userToAmount = $entryDao->getUserToExpensesByMonth($book, $month, $year);
 $defaultUser = $bookDao->getDefaultUser($book);
+$defaultUserExpenses = $defaultUser != null ? $userToAmount[$defaultUser->getId()] : 0;
+$userCountWithoutDefaultUser = count($users) - ($defaultUser != null ? 1 : 0);
 
-$averageExpensesPerRealUser = ($amountSum - $userToAmount[$defaultUser->getId()]) / (count($users) - 1);
+$averageExpensesPerRealUser = ($amountSum - $defaultUserExpenses) / $userCountWithoutDefaultUser;
 
 $smarty = new Smarty();
 

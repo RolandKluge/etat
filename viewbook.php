@@ -12,7 +12,7 @@ function getLinks() {
 }
 
 
-$defaultVisibleEntryCount = 10;
+$defaultVisibleEntryCount = 50;
 
 $bookId = get_param("book");
 
