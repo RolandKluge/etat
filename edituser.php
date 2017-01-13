@@ -33,6 +33,7 @@ if (has_get_param('action') && is_valid_action(get_param('action'))) {
     return;
 }
 $userDao = new UserDao();
+$bookDao = new BookDao();
 
 switch ($action) {
     case NEW_ACTION:
@@ -55,6 +56,7 @@ switch ($action) {
     case EDIT_ACTION:
         $id = get_param('user');
         $user = $userDao->get($id);
+        $userBooks = $bookDao->getBooks($user);
         
         if ($user == NULL) {
             showError("No book could be found for ID " . $id, getTemplate());
@@ -69,6 +71,7 @@ switch ($action) {
         assignTitle($title, $smarty);
         assignLinks(getLinks(), $smarty);
         
+        $smarty->assign('userBooks', $userBooks);
         $smarty->assign('currentAction', $action);
         $smarty->assign('submitAction', SAVE_ACTION);
         $smarty->assign('name', $user->getName());

@@ -1,6 +1,9 @@
 {include file='header.tpl'}
 <h2>Benutzerdaten eingeben</h2>
 <form id="editUserForm" method="get" action="edituser.php">
+    <label for="books">Bücher</label>
+    <input name="books" type="text" size="30" readonly="true" value='{foreach $userBooks as $book}{$book->getName()}{if !$book@last},{/if}{foreachelse}Keine Bücher.{/foreach}
+    '/>
     <label for="name">Name</label>
     <input name="name" type="text" size="30" value='{$name}'/>
     <br/>

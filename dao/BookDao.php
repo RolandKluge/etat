@@ -138,11 +138,33 @@ final class BookDao {
         }
         return $users;
     }
+    
+    public function getBooks(User $user) {
+        $sql = "SELECT * FROM users_to_books JOIN users ON users_to_books.user_id = users.id WHERE user_id = :user_id";
+        $stmt = Database::getDatabase()->prepare($sql);
+        $stmt->bindValue(":user_id", $user->getId(), PDO::PARAM_INT);
+        $stmt->execute();
+
+        $books = array();
+        foreach ($stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
+            $book = $this->get($row['book_id']);
+            array_push($books, $book);
+        }
+        return $books;
+    }
 
     public function getBookToUsersMapping(array $books) {
         $result = array();
         foreach ($books as $book) {
             $result[$book->getId()] = $this->getRealUsers($book);
+        }
+        return $result;
+    }
+
+    public function getUserToBooksMapping(array $users) {
+        $result = array();
+        foreach ($users as $user) {
+            $result[$user->getId()] = $this->getBooks($user);
         }
         return $result;
     }

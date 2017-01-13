@@ -48,22 +48,30 @@
 <div id='usersList'>
     <ul >
         {foreach $users as $user}
-            {if $user->isReal()}
-                <li>
-                    <div class="user">
-                        <div>
-                            <img src="static/images/user.png" width="48" height="48"/>
-                        </div>
-                        <div>
-                            <div class="userName">{$user->getName()}</div>
-                        </div>
-                        <br/>
-                        <div class='edit'>
-                            <a href="./edituser.php?action=edit&user={$user->getId()}">Bearbeiten</a>
-                        </div>
+            <li>
+                <div class="user">
+                    <div>
+                        <img src="static/images/user.png" width="48" height="48"/>
                     </div>
-                </li>   
-            {/if}
+                    <div>
+                        <div class="userName">{$user->getName()} {if !$user->isReal()} [generiert]{/if} </div>
+                    </div>
+                    <br/>
+                    <div class='userBooks'>
+                        <span class='userBookName'>Bücher: 
+                            {foreach $userToBooks[$user->getId()] as $book}
+                                {$book->getName()}{if !$book@last},{/if}
+                            {foreachelse}
+                                Keine Bücher.
+                            {/foreach}
+                        </span>
+                    </div>
+                    <br/>
+                    <div class='edit'>
+                        <a href="./edituser.php?action=edit&user={$user->getId()}">Bearbeiten</a>
+                    </div>
+                </div>
+            </li>   
         {/foreach}
         <li>
             <div class="user">

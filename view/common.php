@@ -40,6 +40,11 @@ function has_get_param($key) {
     return filter_has_var(INPUT_GET, $key);
 }
 
+/**
+ * Sets the page title for the given smarty
+ * @param String $title the page title
+ * @param Smarty $smarty
+ */
 function assignTitle($title, Smarty $smarty) {
     $smarty->assign('title', $title);
 }
