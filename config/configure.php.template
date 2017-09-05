@@ -4,12 +4,9 @@ include_once('config/configure_lang.php');
 
 define("DB_CHARSET", "utf8");
 define("DB_NAME", "<db-name>");
-//define("DB_SOCKET", "db-socket");
-define("DB_HOST", "<db-host>");
+//define("DB_SOCKET", "db-socket"); // e.g., /tmp/mysql5.sock
+define("DB_HOST", "<db-host>"); // e.g., localhost
 
-define("DB_SOCKET", "/tmp/mysql5.sock");
-define("DB_NAME", "db508189938");
-define("DB_HOST", "localhost");
 if (defined("DB_SOCKET")) {
     define("DB", "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET . ";unix_socket=" . DB_SOCKET);
 } else {
