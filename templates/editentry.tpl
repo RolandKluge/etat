@@ -7,7 +7,7 @@
     <input name="bookName" type="text" value='{$book->getName()}' readonly="true"/>
 
     <label for="amount">Betrag:</label>
-    <input id="amount" name="amount" type="numeric" size="4" value='{$amount}'/>
+    <input id="amount" name="amount" type="number" size="4" value='{$amount}'/>
     <span id='currency'>Euro</span>
     <span id="amountNote" class="errorMessage"></span>
 
