@@ -5,8 +5,9 @@
         <div id="text">Eintrag hinzufügen...</div>
     </div>
 </a>
+<br style="clear:both"/>
 <div id="monthlyBalance">
-    <img src="static/images/sigma_upper.png" width="48" height="48"/>
+    <div><strong>Statistik:</strong></div>
     <form method="get" action="./monthlyBalance.php">
         <select name="month">
             {foreach from=$months key=monthId item=month}
@@ -44,19 +45,23 @@
     </form>
 </div>
 <br style="clear:both"/>
-{$entryCount} Einträge - Zeige: {$limitFrom} bis {$limitTo}
+
+<div class="entryNavigation">
 {if $limitFrom > 1}
     {$prevLimitFrom = max($limitFrom - $visibleEntryCount, 1)}
     {$prevLimitTo = $limitFrom - 1}
     {$prevEntryCount = $prevLimitTo - $prevLimitFrom + 1}
-    <a href="./viewbook.php?book={$book->getId()}&limitFrom={$prevLimitFrom}&limitTo={$prevLimitTo}">Zeige vorige {$prevEntryCount} Einträge</a>
+    <a href="./viewbook.php?book={$book->getId()}&limitFrom={$prevLimitFrom}&limitTo={$prevLimitTo}">&lt;&lt;</a><!--Zeige vorige {$prevEntryCount} Einträge-->
 {/if}
+{$entryCount} Einträge &mdash; Zeige Einträge {$limitFrom} bis {$limitTo}
 {if $limitTo < $entryCount}
     {$nextLimitFrom = $limitTo + 1}
     {$nextLimitTo = min($nextLimitFrom + $visibleEntryCount - 1, $entryCount)}
     {$nextEntryCount = $nextLimitTo - $nextLimitFrom + 1}
-    <a href="./viewbook.php?book={$book->getId()}&limitFrom={$nextLimitFrom}&limitTo={$nextLimitTo}">Zeige nächste {$nextEntryCount} Einträge</a>
+    <a href="./viewbook.php?book={$book->getId()}&limitFrom={$nextLimitFrom}&limitTo={$nextLimitTo}">&gt;&gt;</a><!--Zeige nächste {$nextEntryCount} Einträge-->
 {/if}
+</div>
+
 <table id="entriesList">
     <col width='15%'>
     <col width='15%'>
@@ -82,4 +87,21 @@
     <tr>
     {/foreach}
 </table>
+
+<div class="entryNavigation">
+{if $limitFrom > 1}
+    {$prevLimitFrom = max($limitFrom - $visibleEntryCount, 1)}
+    {$prevLimitTo = $limitFrom - 1}
+    {$prevEntryCount = $prevLimitTo - $prevLimitFrom + 1}
+    <a href="./viewbook.php?book={$book->getId()}&limitFrom={$prevLimitFrom}&limitTo={$prevLimitTo}">&lt;&lt;</a><!--Zeige vorige {$prevEntryCount} Einträge-->
+{/if}
+{$entryCount} Einträge - Zeige: {$limitFrom} bis {$limitTo}
+{if $limitTo < $entryCount}
+    {$nextLimitFrom = $limitTo + 1}
+    {$nextLimitTo = min($nextLimitFrom + $visibleEntryCount - 1, $entryCount)}
+    {$nextEntryCount = $nextLimitTo - $nextLimitFrom + 1}
+    <a href="./viewbook.php?book={$book->getId()}&limitFrom={$nextLimitFrom}&limitTo={$nextLimitTo}">&gt;&gt;</a><!--Zeige nächste {$nextEntryCount} Einträge-->
+{/if}
+</div>
+
 {include file='footer.tpl'}
