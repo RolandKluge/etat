@@ -65,7 +65,7 @@ switch ($action)
 
         $smarty->assign('id', '');
         $smarty->assign('amount', '');
-        $smarty->assign('date', date('d.m.Y'));
+        $smarty->assign('date', date('Y-m-d'));
         $smarty->assign('description', '');
         $smarty->assign('descriptionSuggestions', $entryDao->getRecentDescriptions($book, 6));
         $smarty->assign('book', $book);
@@ -100,7 +100,7 @@ switch ($action)
 
         $smarty->assign('id', $entry->getId());
         $smarty->assign('amount', $entry->getAmount());
-        $smarty->assign('date', $entry->getFormattedDate());
+        $smarty->assign('formattedDate', $entry->getFormattedDate());
         $smarty->assign('description', $entry->getDescription());
         $smarty->assign('descriptionSuggestions', $entryDao->getRecentDescriptions($book, 6));
         $smarty->assign('book', $book);
@@ -123,9 +123,9 @@ switch ($action)
         $afterSaveAction = get_param('afterSaveAction');
 
         // Contains the date in the German format: d.m.y
-        $dateComponents = explode('.', $formattedDate);
+        $dateComponents = explode('-', $formattedDate);
         $date = new DateTime();
-        $date->setDate($dateComponents[2], $dateComponents[1], $dateComponents[0]);
+        $date->setDate($dateComponents[0], $dateComponents[1], $dateComponents[2]);
 
         $entry = new BookEntry();
         $entry->setId($id);

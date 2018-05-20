@@ -11,3 +11,4 @@ logfiles
 *.swp
 
 /doc/.~lock.backlog.ods#
+.well-known

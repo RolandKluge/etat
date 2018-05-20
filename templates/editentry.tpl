@@ -7,29 +7,15 @@
     <input name="bookName" type="text" value='{$book->getName()}' readonly="true"/>
 
     <label for="amount">Betrag:</label>
-    <input id="amount" name="amount" type="number" size="4" value='{$amount}'/>
+    <input id="amount" name="amount" type="number" size="4" value='{$amount}' required/>
     <span id='currency'>Euro</span>
     <span id="amountNote" class="errorMessage"></span>
 
     <label for="date">Datum:</label>
-    <input id="date" name="date" type="text" size="10" value='{$date}'/>
-    <input id="prevDay" type="button" value="-"/>
-    <input id="nextDay" type="button" value="+"/>
-    <span id="dateNote" class="errorMessage"></span>
+    <input id="date" type="date" name="date" size="10" min="2013-01-01" value='{$formattedDate}' required/>
 
     <label for="description">Beschreibung</label>
-    <input id='description' name="description" type="text" size="50" value='{$description}'/>
-
-    <!--
-    <label>Vorschläge:</label>
-    <div class='descriptionSuggestions'>
-        {foreach $descriptionSuggestions as $suggestion}
-            <div class='descriptionSuggestion'>{$suggestion}</div>
-        {foreachelse}
-            <div id='noSuggestions'>Keine Vorschläge</div>
-        {/foreach}
-    </div>
-    -->
+    <input id='description' name="description" type="text" size="50" value='{$description}' required/>
 
     <label for="user">Benutzer:</label>
     <select name="user" >
